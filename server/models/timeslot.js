@@ -16,7 +16,7 @@ const TimeslotSchema = new Schema({
     status: {
         type: Boolean,
         required: true,
-        unique : true
+       
     }
 
 });

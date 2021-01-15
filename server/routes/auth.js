@@ -7,6 +7,7 @@
  const Student = require('../models/studentdb');
 
 // create student
+/*
  router.post("/", async (req, res) => {
     // the data that we pull from the request body have to match what inside the parmaters{}
     // taking the student information from the post request body
@@ -60,6 +61,7 @@
     });
 
  })
+ */
 
 
 

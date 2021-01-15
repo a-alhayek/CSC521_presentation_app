@@ -16,7 +16,7 @@ const PresentationSchema = new Schema({
     advisorId : {
         type: String,
         required: true,
-        unique: true
+        
     },
     projectDescription : {
         type: String,
@@ -26,12 +26,12 @@ const PresentationSchema = new Schema({
     projectTitle: {
         type: String,
         required: true,
-        unique: true
+        
     },
     confirm: {
         type: Boolean,
         required: true,
-        unique: true
+        
     }
 });
 
