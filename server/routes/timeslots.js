@@ -46,6 +46,7 @@ router.get('/', (req, res) => {
 
 // find by id
 router.get('/searchById/:id', (req, res) => {
+
   res.json(req.timeslot);
 });
 
@@ -69,34 +70,70 @@ router.get('/reserved', (req, res) => {
 
 });
 
-router.put('/searchById/:id', (req, res) => {
+router.put('/update/:id', (req, res) => {
+  TimeSlot.findById(req.params.id, (err, timeslot) => {
+    if (err) {
+      return res.json({ msg: "Error searching for timeslot with id" });
+    }
+    else if (timeslot) {
+      const { start, end, status } = req.body;
 
-  const { timeslot } = req;
-
-  timeslot[0].start = req.body.start;
-  timeslot[0].end = req.body.end;
-  timeslot[0].status = req.body.status;
-
-  saveTimeslot(timeslot[0], res);
-
-});
+      timeslot.start = start;
+      timeslot.end = end;
+      timeslot.status = status;
 
 
-router.patch('searchById/:id' , (req,res) => {
-  const {timeslot } = req;
+      saveTimeslot(timeslot, res);
+    }
+    else {
+      return res.json({ msg: "could not find a timeslot with this ID" });
+    }
 
-  if(req.bodu._id){
-    delete req.body.id;
-  }
-  Object.entries(req.body).forEach((field) => {
-    const key = field[0]; // taking the name of each field
-    const value = field[1];// taking the value of each field 
-    //testing this line of code was a trouble it turns out this is an array
-    timeslot[0][key] = value; // if this field exists set it up to it value
   });
-  saveTimeslot(timeslot[0],res);
+
 
 });
+
+
+
+
+
+
+router.patch('/update/:id', (req, res) => {
+  
+
+  TimeSlot.findById(req.params.id, (err, timeslot) => {
+    if (err) {
+      return res.json({ msg: "Error searching for timeslot with id" });
+    }
+    else if (timeslot) {
+     
+
+      if (req.body._id) {
+        delete req.body.id;
+      }
+      Object.entries(req.body).forEach((field) => {
+        const key = field[0]; // taking the name of each field
+        const value = field[1];// taking the value of each field 
+        //testing this line of code was a trouble it turns out this is an array
+        timeslot[key] = value; // if this field exists set it up to it value
+      });
+      saveTimeslot(timeslot, res);
+
+
+    }
+    else {
+      return res.json({ msg: "could not find a timeslot with this ID" });
+    }
+
+  });
+
+
+});
+
+
+
+
 
 
 // add time slot, date format goes like this: 

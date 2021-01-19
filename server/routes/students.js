@@ -10,44 +10,46 @@ const saveStudent = (student, res) => {
   student
     .save()
     .then(student => res.json(student))
-    .catch((err) => res.status(400).json({ msg: "error could not save student!" }));
+    .catch(() => res.json({ msg: "error could not save student!" }));
 
 
 };
 
 
 router.use('/searchById/:id', (req, res, next) => {
-// Searching by object ID
-  if (req.params.id.length >8 ){
+  // Searching by object ID
+
   Student.findById(req.params.id, (err, student) => {
     if (err) {
       return res.json({ msg: "Error search for student by ID" });
 
     }
-    if (student) {
-      
+    else if (student) {
+
       req.student = student;
       return next();
     }
-    return res.json({ msg: "could not find a student with matching ID" })
-
-  });}
-
-// searching by student ID
-
-  Student.find({studentid:req.params.id}, (err, student) => {
-    if (err) {
-      return res.json({ msg: "Error search for student by ID" });
-
+    else {
+      return res.json({ msg: "could not find a student with matching ID" });
     }
-    if (student) {
-     
-      req.student = student;
-      return next();
-    }
-    return res.json({ msg: "could not find a student with matching ID" })
 
   });
+
+  // searching by student ID
+  // Student.find({studentid:req.params.id}, (err, student) => {
+  //   if (err) {
+  //     return res.json({ msg: "Error search for student by ID" });
+
+  //   }
+  //   if (student) {
+     
+  //     req.student = student;
+  //     return next();
+  //   }
+  //   return res.json({ msg: "could not find a student with matching ID" })
+
+  // });
+
 
 });
 
@@ -67,14 +69,14 @@ router.get('/searchById/:id', (req, res) => {
 // get by major
 
 router.get('/cs', (req, res) => {
-  Student.find({major:"CS"})
+  Student.find({ major: "CS" })
     .sort({ "lastName": 1 })
     .then(students => res.json(students))
     .catch(err => res.json({ msg: "could not find all students" }));
 });
 
 router.get('/it', (req, res) => {
-  Student.find({major:"IT"})
+  Student.find({ major: "IT" })
     .sort({ "lastName": 1 })
     .then(students => res.json(students))
     .catch(err => res.json({ msg: "could not find all students" }));
@@ -84,42 +86,72 @@ router.get('/searchById/:id', (req, res) => {
 });
 
 
-router.put('/searchById/:id' , (req,res) =>{
-  const{student} = req;
-  const { studentid, email, passwordHash, firstName, lastName, major, isGroup, signupStatus } = req.body;
-  student[0].studentid = studentid;
-  student[0].email = email;
-  student[0].passwordHash = passwordHash;
-  student[0].firstName = firstName;
-  student[0].lastName = lastName;
-  student[0].major = major ;
-  student[0].isGroup = isGroup;
-  student[0].signupStatus = signupStatus;
+router.put('/update/:id', (req, res) => {
 
-  saveStudent(student[0],res);
+  const { studentid, email, passwordHash, firstName, lastName, major, isGroup, signupStatus } = req.body;
+
+  Student.findById(req.params.id, (err, student) => {
+    if (err) {
+      return res.send(err);
+    }
+    else if (student) {
+      student.studentid = studentid;
+      student.email = email;
+      student.passwordHash = passwordHash;
+      student.firstName = firstName;
+      student.lastName = lastName;
+      student.major = major;
+      student.isGroup = isGroup;
+      student.signupStatus = signupStatus;
+      saveStudent(student, res);
+    }
+    else {
+      return res.json({ msg: "could not find a student with matching ID" });
+    }
+  });
+
+
+
 
 });
 // edit only particaler fields
 
-router.patch('/searchById/:id' , (req,res) => {
-  const {student} = req;
+router.patch('/update/:id', (req, res) => {
 
-  if(req.body._id){ // if by mistake they setUp the ID we can delete the ID so it won't set up
-    delete req.body._id; 
-  }
-  Object.entries(req.body).forEach((field) => {
-    const key = field[0]; // taking the name of each field
-    const value = field[1];// taking the value of each field 
-    //testing this line of code was a trouble it turns out this is an array
-    student[0][key] = value; // if this field exists set it up to it value
+
+  Student.findById(req.params.id, (err, student) => {
+    if (err) {
+      return res.send(err);
+    }
+    else if (student) {
+
+      if (req.body._id) {
+        delete req.body.id;
+      }
+      Object.entries(req.body).forEach((field) => {
+        const key = field[0]; // taking the name of each field
+        const value = field[1];// taking the value of each field 
+        //testing this line of code was a trouble it turns out this is an array
+        student[key] = value; // if this field exists set it up to it value
+
+      });
+
+      saveStudent(student, res);
+    }
+    else {
+      return res.json({ msg: "could not find a student with matching ID" });
+    }
+
   });
-  saveStudent(student[0],res);
+
+
+
 
 });
 
 
 router.post('/', (req, res) => {
-  
+
   const { studentid, email, passwordHash, firstName, lastName, major, isGroup, signupStatus } = req.body;
   let student = new Student({
     studentid,
@@ -136,10 +168,10 @@ router.post('/', (req, res) => {
 
 
 
-router.delete(':id' , (req,res) => {
+router.delete(':id', (req, res) => {
   Student.findByIdAndDelete(req.params.id)
-  .then(() => res.json({msg:"Student deleted"}))
-  .catch(() => res.json({msg:"Could not delete Student"}))
+    .then(() => res.json({ msg: "Student deleted" }))
+    .catch(() => res.json({ msg: "Could not delete Student" }))
 })
 
 
