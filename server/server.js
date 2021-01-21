@@ -38,7 +38,7 @@ app.use('/api/students', require('./routes/students'));
 app.use('/api/presentations', require('./routes/presentations'));
 
 
-app.use('/api/timeslots', require('./routes/timeslots'));
+app.use('/api', require('./routes/timeslots'));
 
 
 
