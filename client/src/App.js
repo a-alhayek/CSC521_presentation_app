@@ -1,62 +1,36 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
 
-// Constants
-import * as actions from './actions';
-import { routes } from './constants';
+import Login from './components/auth/login';
+import { AuthContext } from './components/auth/auth';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
-// Styles
-import { CssBaseline } from '@material-ui/core';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/App.css';
+function App() {
+  const existingToken = localStorage.getItem('token') || '';
+  const existingUsername = localStorage.getItem('username') || '';
+  const [authToken, setAuthToken] = useState(existingToken);
+  const [username, setUsername] = useState(existingUsername);
 
-// Static/Stateless
-import {
-    NavBar,
-    PageLayout,
-    Welcome
-} from './components';
+  const setUserName = data => {
+    if (!data) {
+      localStorage.removeItem('username');
+      setUsername();
+    } else {
+      localStorage.setItem('username', data);
+      setUsername(data);
+    }
+  };
 
-// Pages
-import {
-    ItemInsert,
-    ItemsList,
-    ItemsTable,
-    ItemUpdate
-} from './pages';
+  const setToken = data => {
+    if (!data) {
+      localStorage.removeItem('token');
+      setAuthToken();
+    } else {
+      localStorage.setItem('token', JSON.stringify(data));
+      setAuthToken(data);
+    }
+  };
 
-class App extends Component {
-    render() {
+  return <Login />;
+}
 
-        const publicViews = (
-            <Switch>
-                <Route exact path={routes.HOME} component={Welcome} />
-                <Route exact path={routes.ITEMS} component={ItemsList} />
-                <Route exact path={`${routes.ITEMS}/react-table-v6`} component={ItemsTable} />
-                <Route exact path={routes.ITEM_INSERT} component={ItemInsert} />
-                <Route exact path={routes.ITEM_UPDATE} component={ItemUpdate} />
-            </Switch>
-        );
-
-        return (
-            <Router>
-                <CssBaseline />
-                <NavBar />
-                <div className="app--main">
-                    <PageLayout />
-                    <div className="view-container">
-                        {publicViews}
-                    </div>
-                </div>
-            </Router>
-        );
-    };
-};
-
-const mapStateToProps = state => ({ ...state });
-
-const mapDispatchToProps = dispatch => bindActionCreators(actions, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
