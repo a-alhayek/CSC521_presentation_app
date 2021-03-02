@@ -73,7 +73,6 @@ studentLogin = (req, res) => {
         jwt.sign(
           {
             studentid: student.studentid,
-            role: 'student',
           },
           process.env.ACCESS_TOKEN_SECRET,
           { algorithm: 'HS256', expiresIn: '7200s' },
@@ -91,6 +90,7 @@ studentLogin = (req, res) => {
               student: {
                 student: student.studentid,
               },
+              role: 'student',
             });
           },
         );
