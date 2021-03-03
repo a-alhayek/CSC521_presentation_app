@@ -3,6 +3,7 @@ import { Grid, Card, Typography, TextField } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { useAuth } from './auth';
 import axios from 'axios';
+import {ThemeProvider, createMuiTheme} from "@material-ui/core/styles"
 
 //import { updateAppSettings } from "../util";
 
@@ -34,6 +35,12 @@ export const Login = props => {
       alert(`You have entered wrong Username or password, please try again!, ${err.message}`);
     }
   };
+
+  const theme = createMuiTheme({
+    palette:{
+      type:"dark",
+    }
+  });
   const submitHandler = e => {
     e.preventDefault();
     onClickLogin();
@@ -44,6 +51,7 @@ export const Login = props => {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <Grid
       container
       direction="row"
@@ -51,6 +59,7 @@ export const Login = props => {
       xs={12}
       justify="center"
       alignItems="center"
+      
       style={{ height: '100%' }}>
       <Grid
         container
@@ -62,12 +71,12 @@ export const Login = props => {
         spacing={3}
         xs={8}
         md={4}
-        style={{ padding: '20px' }}>
-        <Grid container item xs={12} justify="center">
-          <Typography variant="h3"></Typography>
+        style={{ padding: '60px' }}>
+        <Grid container item xs={16} justify="center" direction="row">
+          <Typography variant="h4" alignItems="stretch">Sign-Up Capstone</Typography>
         </Grid>
         <form onSubmit={submitHandler}>
-          <Grid container item direction="column" xs={12} alignItems="stretch">
+          <Grid container item direction="column" xs={12} alignItems="stretch" style={{padding: '20px'}}>
             <TextField
               placeholder="Username"
               name="username"
@@ -75,7 +84,7 @@ export const Login = props => {
               onChange={e => setUsername(e.target.value)}
             />
           </Grid>
-          <Grid container item direction="column" xs={12} alignItems="stretch">
+          <Grid container item direction="column" xs={12} alignItems="stretch" style ={{padding:'20px'}}>
             <TextField
               placeholder="Password"
               name="password"
@@ -84,12 +93,13 @@ export const Login = props => {
               onChange={e => setPassword(e.target.value)}
             />
           </Grid>
-          <Grid container item direction="column" xs={12}>
+          <Grid container item direction="column" xs={12} style={{padding:'20px'}} >
             <input type="submit" value="LOGIN" />
           </Grid>
         </form>
       </Grid>
     </Grid>
+    </ThemeProvider>
   );
 };
 export default Login;
