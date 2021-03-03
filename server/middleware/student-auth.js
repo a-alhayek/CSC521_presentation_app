@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 authenticateToken = (req, res, next) => {
-  let publicURL = [{ url: '/api/student/login', method: 'POST' }];
+  let publicURLS = [{ url: '/api/student/login', method: 'POST' }];
 
   let isPublic = false;
 
@@ -19,10 +19,12 @@ authenticateToken = (req, res, next) => {
 
   if (isPublic) {
     next();
+
     return;
   }
 
   const token = req.header('x-auth-token');
+  console.log(token);
   if (!token) {
     res.status(401).json({ msg: 'Invalid token. Access Denied' });
     return;

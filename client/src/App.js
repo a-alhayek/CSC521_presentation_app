@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
-import Login from './components/auth/login';
-import CustomAppBar from './components/appbar/AppBar';
-import PrivateRoute from './components/route_types/PrivateRoute';
-import { AuthContext } from './components/auth/auth';
+import Login from './studentComponents/auth/login';
+import CustomAppBar from './studentComponents/appbar/AppBar';
+import PrivateRoute from './studentComponents/route_types/PrivateRoute';
+import { AuthContext } from './studentComponents/auth/auth';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import HomePage from './components/homepage/Home';
+import HomePage from './studentComponents/homepage/Home';
 
 function App() {
   const existingToken = localStorage.getItem('token') || '';
