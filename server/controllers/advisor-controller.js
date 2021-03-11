@@ -145,7 +145,12 @@ createAdvisor = async (req, res) => {
     });
   }
   const saltRound = 10;
-  const { advisorid, email, password, firstName, lastName, major } = req.body;
+  const { advisorid, email, firstName, lastName, major } = req.body.advisor;
+  console.log(advisorid);
+
+  const password = `${lastName}_${advisorid}`;
+  console.log(password);
+
   await bcrypt.hash(password, saltRound, (err, hash) => {
     if (err) {
       console.error(`400 in 'hashing the password': ${err}`);

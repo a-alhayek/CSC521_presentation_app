@@ -153,6 +153,37 @@ createTimeslot = (req, res) => {
     });
 };
 
+createTimeslots = (req, res) => {
+  const body = req.body;
+  // console.log('----------------------- createTimeslot: req -----------------------')
+  // console.log(req);
+  // console.log('----------------------- createTimeslot: body -----------------------')
+  console.log(body);
+  if (!body) {
+    console.error(`400 in 'createTimeslot': you must provide timeslot to create.`);
+    return res.status(400).json({
+      sucess: false,
+      error: 'You must provide a timeslot.',
+    });
+  }
+  const { timeslots } = body;
+  Timeslot.insertMany(timeslots, (err, docs) => {
+    if (err) {
+      console.error(`400 in 'createTimeslots': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+      });
+    }
+    return res.status(200).json({
+      success: true,
+
+      message: 'Timeslots created',
+      document: docs,
+    });
+  });
+};
+
 updateTimeslot = (req, res) => {
   const body = req.body;
   // console.log('----------------------- updateItem: req -----------------------');
@@ -170,6 +201,7 @@ updateTimeslot = (req, res) => {
     _id: req.params.id,
     start: body.start,
     end: body.end,
+    day: body.day,
     status: body.status,
   };
   // console.log('----------------------- updateTimeslot: res -----------------------');
@@ -229,4 +261,5 @@ module.exports = {
   deleteTimeslot,
   getAvailableTimeslots,
   getReservedTimeslots,
+  createTimeslots,
 };

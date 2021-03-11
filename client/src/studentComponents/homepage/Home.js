@@ -1,21 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import { withRouter, Redirect } from 'react-router-dom';
-import { Grid, Typography, TextField, Paper } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useAuth } from '../auth/auth';
-import fetch from '../util/studentApiFetch';
 
 const HomePage = props => {
-  const { username, role } = useAuth();
-  const [email, setEmail] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLast] = useState('');
-  const res = fetch();
-
-  useEffect(() => {
-    console.log('res in home');
-    console.log(res);
-  });
+  const { username } = useAuth();
 
   if (!username) {
     return <Redirect to="/login" />;

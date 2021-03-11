@@ -3,7 +3,7 @@ import { Grid, Card, Typography, TextField } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import { useAuth } from './auth';
 import axios from 'axios';
-
+import Button from '@material-ui/core/Button';
 //import { updateAppSettings } from "../util";
 
 export const Login = props => {
@@ -51,7 +51,7 @@ export const Login = props => {
       xs={12}
       justify="center"
       alignItems="center"
-      style={{ height: '100%' }}>
+      style={{ height: '500px' }}>
       <Grid
         container
         direction="column"
@@ -64,8 +64,9 @@ export const Login = props => {
         md={4}
         style={{ padding: '20px' }}>
         <Grid container item xs={12} justify="center">
-          <Typography variant="h3"></Typography>
+          <Typography variant="h5">Sign In</Typography>
         </Grid>
+
         <form onSubmit={submitHandler}>
           <Grid container item direction="column" xs={12} alignItems="stretch">
             <TextField
@@ -85,11 +86,14 @@ export const Login = props => {
             />
           </Grid>
           <Grid container item direction="column" xs={12}>
-            <input type="submit" value="LOGIN" />
+            <Button variant="contained" type="submit" color="primary">
+              Login
+            </Button>
           </Grid>
         </form>
       </Grid>
     </Grid>
   );
 };
+
 export default Login;

@@ -36,6 +36,7 @@ authenticateToken = (req, res, next) => {
     next();
   });
 };
+
 studentLogin = (req, res) => {
   const body = req.body;
   if (!body) {
@@ -46,6 +47,7 @@ studentLogin = (req, res) => {
     });
   }
   const { studentid, password } = body;
+  // search if this id is in student collection
   Student.findOne({ studentid }, (err, student) => {
     if (err) {
       console.error(`400 in 'studentLogin': ${err}`);

@@ -3,12 +3,14 @@ import { Link } from 'react-router-dom';
 import { MoreVert } from '@material-ui/icons';
 import { Menu, MenuItem, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { useAuth } from '../auth/auth';
-
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HomeIcon from '@material-ui/icons/Home';
 const CustomAppBar = () => {
   const [shouldOpenMenu, setOpenMenu] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
 
-  const { setUserName, username, setAuthToken } = useAuth();
+  const { setUserName, username, setAuthToken, setTheRole } = useAuth();
 
   const closeMenu = () => {
     setOpenMenu(false);
@@ -22,6 +24,7 @@ const CustomAppBar = () => {
   const logout = () => {
     setUserName();
     setAuthToken();
+    setTheRole();
     closeMenu();
   };
 
@@ -35,13 +38,14 @@ const CustomAppBar = () => {
           open={shouldOpenMenu}
           onClose={() => closeMenu()}>
           <MenuItem onClick={() => closeMenu()}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
-              Home
+            <Link to="/profile" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              <AccountCircleIcon herf="profile" color="primary" />
             </Link>
           </MenuItem>
           <MenuItem onClick={() => logout()}>
             <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
-              Logout
+              <ExitToAppIcon color="error" />
             </Link>
           </MenuItem>
         </Menu>
@@ -52,7 +56,9 @@ const CustomAppBar = () => {
             <MoreVert />
           </IconButton>
         ) : null}
-        <Typography variant="h6">YouPresent</Typography>
+        <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
+          <Typography variant="h6">YouPresent</Typography>
+        </Link>
       </Toolbar>
     </AppBar>
   );

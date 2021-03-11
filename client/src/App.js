@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-
 import Login from './studentComponents/auth/login';
 import CustomAppBar from './studentComponents/appbar/AppBar';
 import PrivateRoute from './studentComponents/route_types/PrivateRoute';
 import { AuthContext } from './studentComponents/auth/auth';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomePage from './studentComponents/homepage/Home';
+import ProfilePage from './studentComponents/homepage/Profile';
+import CreateTimeSlots from './adminComponents/timeslotComponents/CreateTimeslots';
+import TimeList from './adminComponents/timeslotComponents/TimeslotsList';
+import TimeslotUpdate from './adminComponents/timeslotComponents/TimeslotUpdate';
+import CreateSupervisor from './adminComponents/supervisorComponent/CreateSupervisor';
+import AdvisorsList from './adminComponents/supervisorComponent/SupervisorList';
 
 function App() {
   const existingToken = localStorage.getItem('token') || '';
@@ -35,8 +40,6 @@ function App() {
   };
 
   const setToken = data => {
-    console.log('token');
-    console.log(data);
     if (!data) {
       localStorage.removeItem('token');
       setAuthToken();
@@ -61,7 +64,13 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/timeslots/create" component={CreateTimeSlots} />
+          <Route exact path="/supervisor/create" component={CreateSupervisor} />
+          <Route exact path="/supervisors" component={AdvisorsList} />
+          <Route exact path="/timeslots" component={TimeList} />
+          <Route exact path="/timeslot/update/:id" component={TimeslotUpdate} />
           <PrivateRoute exact path="/home" component={HomePage} />
+          <PrivateRoute exact path="/profile" component={ProfilePage} />
         </Switch>
       </BrowserRouter>
     </AuthContext.Provider>
