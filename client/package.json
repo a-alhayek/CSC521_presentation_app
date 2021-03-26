@@ -11,6 +11,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -30,7 +31,8 @@
     "react-table-6": "^6.11.0",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^5.0.1"
+    "styled-components": "^5.0.1",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "start": "PORT=8000 react-scripts start",

@@ -160,10 +160,10 @@ createTimeslots = (req, res) => {
   // console.log('----------------------- createTimeslot: body -----------------------')
   console.log(body);
   if (!body) {
-    console.error(`400 in 'createTimeslot': you must provide timeslot to create.`);
+    console.error(`400 in 'createTimeslot': you must provide timeslots to create.`);
     return res.status(400).json({
       sucess: false,
-      error: 'You must provide a timeslot.',
+      error: 'You must provide a timeslots.',
     });
   }
   const { timeslots } = body;
@@ -183,7 +183,23 @@ createTimeslots = (req, res) => {
     });
   });
 };
+changeTimeslotStatus = (req, res) => {
+  Timeslot.findOneAndUpdate({ _id: req.params.id }, { status: true }, (err, timeslot) => {
+    if (err) {
+      console.error(`400 in 'changeTimeslotStatus': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+      });
+    }
+    return res.status(200).json({
+      success: true,
 
+      message: 'Timeslots status changed',
+      timeslot: timeslot,
+    });
+  });
+};
 updateTimeslot = (req, res) => {
   const body = req.body;
   // console.log('----------------------- updateItem: req -----------------------');
@@ -252,6 +268,28 @@ deleteTimeslot = (req, res) => {
     });
   });
 };
+removeTimeslot = (req, res) => {
+  Timeslot.deleteMany({}, (err, timeslots) => {
+    if (err) {
+      console.error(`400 in 'removeTimeslot': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+      });
+    }
+    if (!timeslots) {
+      console.error(`404 in 'removeTimeslot': timeslot not found!`);
+      return res.status(404).json({
+        success: false,
+        error: 'Timeslot not found',
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      timeslots: timeslots,
+    });
+  });
+};
 
 module.exports = {
   getTimeslots,
@@ -262,4 +300,6 @@ module.exports = {
   getAvailableTimeslots,
   getReservedTimeslots,
   createTimeslots,
+  removeTimeslot,
+  changeTimeslotStatus,
 };

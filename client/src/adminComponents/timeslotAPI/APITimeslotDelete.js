@@ -7,8 +7,13 @@ const DeleteTimeslot = id => {
 
     'x-auth-token': localStorage.getItem('token'),
   };
-  const apiDelete = async (url, headers) => {
-    return await axios.delete(url, { headers });
+  const apiDelete = (url, headers) => {
+    return axios
+      .delete(url, { headers })
+      .then(response => {
+        return response;
+      })
+      .catch(err => console.log(err));
   };
 
   return apiDelete(url, headers);

@@ -2,10 +2,11 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const useFetch = () => {
-  const [advisors, setData] = useState(null);
-  const [loadingAdvisors, setLoading] = useState(false);
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  const url = `http://localhost:8080/api/advisors`;
+  const username = localStorage.getItem('username');
+  const url = `http://localhost:8080/api/presentation/${username}`;
   const headers = {
     'Content-Type': 'application/json',
 
@@ -18,15 +19,19 @@ const useFetch = () => {
     axios
       .get(url, { headers })
       .then(response => {
-        setData(response.data.advisors);
+        setData(response.data.presentation);
         setLoading(false);
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+
+        setLoading(false);
+      });
   };
   useEffect(() => {
     fetchApi(url, headers);
   }, []);
-  return { advisors, loadingAdvisors };
+  return { data, loading };
 };
 
 export default useFetch;

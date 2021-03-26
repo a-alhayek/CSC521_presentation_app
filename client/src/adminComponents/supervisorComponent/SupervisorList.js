@@ -2,16 +2,19 @@ import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import DeleteButton from '../../components/buttons/DeleteButton';
 import React from 'react';
-import useFetch from '../supervisorAPI/APIAdvisorsFetch';
+import useFetchAdvisors from '../supervisorAPI/APIAdvisorsFetch';
 import DeleteAdvisor from '../supervisorAPI/APIAdvisorDelete';
+import 'react-table-6/react-table.css';
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
-
+const Title = styled.h1.attrs({
+  className: 'h1',
+})``;
 const AdvisorsList = () => {
-  const { data, loading } = useFetch();
+  const { advisors, loadingAdvisors } = useFetchAdvisors();
 
-  return <TableList advisors={data} loading={loading}></TableList>;
+  return <TableList advisors={advisors} loading={loadingAdvisors}></TableList>;
 };
 
 const TableList = props => {
@@ -21,14 +24,6 @@ const TableList = props => {
   };
 
   const columns = [
-    {
-      Header: 'ID',
-      accessor: '_id',
-      filterable: true,
-      cell: props => {
-        return <span data-date-id={props.original._id}>{props.value}</span>;
-      },
-    },
     {
       Header: 'First Name',
       accessor: 'firstName',
@@ -78,8 +73,15 @@ const TableList = props => {
   return (
     <Wrapper>
       {props.advisors ? (
-        <ReactTable data={props.advisors} columns={columns} loading={props.loading} />
-      ) : null}
+        <ReactTable
+          className="-highlight"
+          data={props.advisors}
+          columns={columns}
+          loading={props.loading}
+        />
+      ) : (
+        <Title>No Advisors to render!</Title>
+      )}
     </Wrapper>
   );
 };

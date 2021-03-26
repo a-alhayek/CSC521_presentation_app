@@ -146,8 +146,6 @@ createAdvisor = async (req, res) => {
   }
   const saltRound = 10;
   const { advisorid, email, firstName, lastName, major } = req.body.advisor;
-  console.log(advisorid);
-
   const password = `${lastName}_${advisorid}`;
   console.log(password);
 
@@ -331,8 +329,8 @@ updateAdvisor = (req, res) => {
     });
 };
 
-deleteAdvisor = async (req, res) => {
-  await Advisor.findOneAndDelete({ _id: req.params.id }, (err, advisor) => {
+deleteAdvisor = (req, res) => {
+  Advisor.findOneAndDelete({ _id: req.params.id }, (err, advisor) => {
     if (err) {
       console.error(`400 in 'deleteAdvisor': ${err}`);
       return res.status(400).json({
@@ -351,10 +349,6 @@ deleteAdvisor = async (req, res) => {
       success: true,
       advisor: advisor,
     });
-  }).catch(err => {
-    console.error(`caught error in 'deleteAdvisor': ${err}`);
-    console.error(err);
-    return err;
   });
 };
 

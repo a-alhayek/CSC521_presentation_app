@@ -34,6 +34,7 @@ const Title = styled.h1.attrs({
 const CreateTimeSlots = () => {
   const [timeslotNumber, setTimeslotNumber] = useState('');
   const [timeslotDuration, setTimeslotDuration] = useState('');
+  const [breakDuration, setBreakDuration] = useState('');
   const [startTime, setStartTime] = useState('');
   const [redirect, setRedirect] = useState(null);
   const [date, setDate] = useState('');
@@ -63,6 +64,15 @@ const CreateTimeSlots = () => {
       setTimeslotDuration(parseInt(time.target.value, 10));
     }
   };
+  const setBreakDurationOnChange = time => {
+    if (time.target.value === '') {
+      setBreakDuration(time.target.value);
+    } else if (parseInt(time.target.value, 10).toString() === 'NaN') {
+      alert('Please enter number that represent minutes for duration');
+    } else {
+      setBreakDuration(parseInt(time.target.value, 10));
+    }
+  };
   const setNumberOnChange = num => {
     if (num.target.value.toString() === '') {
       setTimeslotNumber(num.target.value);
@@ -75,7 +85,13 @@ const CreateTimeSlots = () => {
   };
 
   const handleSubmitButton = async () => {
-    if (timeslotDuration === '' || timeslotNumber === '' || startTime === '' || date === '') {
+    if (
+      timeslotDuration === '' ||
+      timeslotNumber === '' ||
+      startTime === '' ||
+      date === '' ||
+      breakDuration === ''
+    ) {
       alert('Please fill all the information in order to create Timeslots!');
     } else if (
       window.confirm(
@@ -88,6 +104,9 @@ const CreateTimeSlots = () => {
       for (let i = 0; i < timeslotNumber; i++) {
         let mS = moment(new Date(start));
         let mE = moment(new Date(start));
+        if (i > 0) {
+          mS.add(parseInt(breakDuration), 'm');
+        }
         mE.add(parseInt(timeslotDuration), 'm');
 
         start = `${date}T${mE.format('kk:mm:ss')}`;
@@ -101,14 +120,18 @@ const CreateTimeSlots = () => {
         timeslots.push(timeslot);
       }
       const url = `http://localhost:8080/api/timeslots`;
-
+      /*  const headers = {
+        'Content-Type': 'application/json',
+    
+        'x-auth-token': localStorage.getItem('token'),
+      };
+ */
       try {
         const response = await axios.post(url, { timeslots });
         alert(
           `${response.data.message}, the status of the request to the database is ${response.data.success}`,
         );
-        setTimeslotDuration('');
-        setTimeslotNumber('');
+
         setRedirect('/timeslots');
       } catch (err) {
         alert(
@@ -126,8 +149,10 @@ const CreateTimeSlots = () => {
       setStart={setStartOnChange}
       setNumber={setNumberOnChange}
       setDuration={setDurationOnChange}
+      setBreakDuration={setBreakDurationOnChange}
       handleSubmit={handleSubmitButton}
       duration={timeslotDuration}
+      breakDuration={breakDuration}
       quantity={timeslotNumber}
       date={date}
     />
@@ -178,6 +203,27 @@ const DatePickeer = props => {
               // defaultValue={20} //  ask Bo about it
               value={props.duration}
               onChange={props.setDuration}
+            />
+          </Paper>
+        </Grid>
+        {
+          // break duration code block
+        }
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <Typography color="textPrimary">Break Duration between timeslots in mins:</Typography>
+          </Paper>
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>
+            <TextField
+              required
+              id="standard-required"
+              label="Required"
+              className={classes.textField}
+              // defaultValue={20} //  ask Bo about it
+              value={props.breakDuration}
+              onChange={props.setBreakDuration}
             />
           </Paper>
         </Grid>

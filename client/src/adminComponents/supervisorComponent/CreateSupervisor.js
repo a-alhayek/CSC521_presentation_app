@@ -39,9 +39,8 @@ const CreateSupervisor = () => {
   const setFirstNameOnChange = e => setFirstName(e.target.value);
   const setLastNameOnChange = e => setLastName(e.target.value);
   const setEmailOnChange = e => setEmail(e.target.value);
-  const setMajorOnChange = e => {
-    setMajor(e.target.value);
-  };
+  const setMajorOnChange = e => setMajor(e.target.value);
+
   const validateAdvisorID = () => {
     const reg = /^\d+$/;
     console.log('vID');
@@ -140,7 +139,7 @@ const SupervisorFields = props => {
 
   return (
     <div className={classes.root}>
-      <Title>Create Supervisors</Title>
+      <Title>Create New Supervisors</Title>
       <Grid container spacing={3}>
         {
           // Advisor id code block

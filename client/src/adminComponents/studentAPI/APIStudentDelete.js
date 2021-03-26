@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const DeleteAdvisor = id => {
-  const url = `http://localhost:8080/api/advisor/${id}`;
+const DeleteStudent = id => {
+  const url = `http://localhost:8080/api/student/${id}`;
   const headers = {
     'Content-Type': 'application/json',
 
@@ -10,12 +10,12 @@ const DeleteAdvisor = id => {
   const apiDelete = (url, headers) => {
     return axios
       .delete(url, { headers })
-      .then(response => {
-        return response;
+      .then(res => {
+        return res;
       })
       .catch(err => console.log(err));
   };
 
   return apiDelete(url, headers);
 };
-export default DeleteAdvisor;
+export default DeleteStudent;

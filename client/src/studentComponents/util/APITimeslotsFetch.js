@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
-const useFetch = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+const useFetchTimeslots = () => {
+  const [timeslots, setTimeslots] = useState(null);
+  const [load, setLoad] = useState(false);
 
   const username = localStorage.getItem('username');
-  const url = `http://localhost:8080/api/student/stu/${username}`;
+  const url = `http://localhost:8080/api/timeslots/available`;
   const headers = {
     'Content-Type': 'application/json',
 
@@ -14,13 +14,13 @@ const useFetch = () => {
   };
 
   const fetchApi = async (url, headers) => {
-    setLoading(true);
+    setLoad(true);
 
     axios
       .get(url, { headers })
       .then(response => {
-        setData(response.data.student);
-        setLoading(false);
+        setTimeslots(response.data.timeslots);
+        setLoad(false);
       })
       .catch(err => {
         console.log(err);
@@ -29,7 +29,7 @@ const useFetch = () => {
   useEffect(() => {
     fetchApi(url, headers);
   }, []);
-  return { data, loading };
+  return { timeslots, load };
 };
 
-export default useFetch;
+export default useFetchTimeslots;

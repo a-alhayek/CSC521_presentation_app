@@ -1,4 +1,3 @@
-import { Avatar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import useFetch from '../util/APIStudentFetch';
 import { useAuth } from '../auth/auth';

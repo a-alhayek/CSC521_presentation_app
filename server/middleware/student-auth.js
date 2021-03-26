@@ -56,7 +56,9 @@ studentLogin = (req, res) => {
         error: err,
         message: 'error in studentLogin',
       });
-    } else if (!student) {
+    }
+    //if student not found call supervisorlogin then if supervisor not found call admin login
+    else if (!student) {
       console.error(`404 in 'studentLogin': StudentID not found`);
       return res.status(404).json({
         success: false,

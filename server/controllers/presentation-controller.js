@@ -27,7 +27,7 @@ getPresentations = (req, res) => {
 };
 
 getPresentationById = (req, res) => {
-  Presentation.find({ _id: req.params.id }, (err, presentations) => {
+  Presentation.find({ studentsId: req.params.id }, (err, presentations) => {
     if (err) {
       console.error(`400 in 'getPresentationById': ${err}`);
       return res.status(400).json({
@@ -36,6 +36,7 @@ getPresentationById = (req, res) => {
         message: 'error searching for presentation by ID',
       });
     }
+    console.log(presentations);
     if (!presentations.length) {
       console.error(`404 in 'getPresentationById': presentation not found`);
       return res.status(404).json({
@@ -140,7 +141,7 @@ updatePresentation = (req, res) => {
   }
   const presentationForUpdate = {
     _id: req.params.id,
-    students: body.students,
+    studentsId: body.studentsId,
     timeslotId: body.timeslotId,
     advisorId: body.advisorId,
     projectDescription: body.projectDescription,

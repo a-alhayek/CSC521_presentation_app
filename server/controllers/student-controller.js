@@ -25,7 +25,7 @@ getStudents = (req, res) => {
     console.log(`200 in 'getStudents : Students fetched!`);
     return res.status(200).json({
       success: true,
-      students: students.filter(student => student.studentid === req.studentid.studentid),
+      students: students,
     });
   });
 };
@@ -134,6 +134,68 @@ getStudentByStuId = (req, res) => {
   });
 };
 
+createStudents = async (req, res) => {
+  const body = req.body;
+  if (!body) {
+    console.error(`400 in 'createStudents': you must provide students to create.`);
+    return res.status(400).json({
+      sucess: false,
+      error: 'You must provide a students.',
+    });
+  }
+  const saltRound = 10;
+  let { students } = body;
+
+  try {
+    students = students.map(async field => {
+      field['passwordHash'] = await bcrypt.hash(field['passwordHash'], saltRound);
+      return field;
+    });
+  } catch (err) {}
+
+  Promise.all(students)
+    .then(students => {
+      console.log(students);
+      Student.insertMany(students, { ordered: false }, (err, docs) => {
+        if (err && err['code'] !== null && err['code'] !== 11000) {
+          //console.error(`400 in 'createStudents': ${docs} , \nresult: ${JSON.stringify(docs)}`);
+
+          return res.status(400).json({
+            success: false,
+            error: docs,
+          });
+        } else if (
+          err &&
+          err['code'] !== null &&
+          err['code'] === 11000 &&
+          err.result.nInserted === 0
+        ) {
+          return res.status(200).json({
+            success: true,
+            students: err.result.nInserted,
+
+            message: 'No student created please check for duplicates ',
+            document: err,
+          });
+        }
+        return res.status(200).json({
+          success: true,
+          students: students.length,
+          message: `All students created`,
+          document: docs,
+        });
+      });
+    })
+    .catch(err => {
+      console.error(`400 in 'hashing the password': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+        message: 'error hashing the password',
+      });
+    });
+};
+
 createStudent = async (req, res) => {
   const body = req.body;
   // console.log('----------------------- createTimeslot: req -----------------------')
@@ -148,16 +210,8 @@ createStudent = async (req, res) => {
     });
   }
   const saltRound = 10;
-  const {
-    studentid,
-    email,
-    password,
-    firstName,
-    lastName,
-    major,
-    isGroup,
-    signupStatus,
-  } = req.body;
+  const { studentid, email, firstName, lastName, major, isGroup, signupStatus } = req.body.student;
+  const password = `${lastName}_${studentid}`;
   await bcrypt.hash(password, saltRound, (err, hash) => {
     if (err) {
       console.error(`400 in 'hashing the password': ${err}`);
@@ -273,6 +327,27 @@ updateStudent = (req, res) => {
     });
   });
 };
+
+updateStudentStatus = (req, res) => {
+  Student.findOneAndUpdate({ studentid: req.params.id }, { signupStatus: true }, (err, student) => {
+    if (err) {
+      console.error(`404 in 'updateStudent' : Student not found`);
+      console.error(err);
+      return res.status(404).json({
+        success: false,
+        error: err,
+        message: 'Student not found!',
+      });
+    }
+    console.log(`200 in 'updateStudent' : Student updated!`);
+    return res.status(200).json({
+      success: true,
+      id: req.params.id,
+      message: 'Student updated',
+      student: student,
+    });
+  });
+};
 // delete function
 deleteStudent = (req, res) => {
   Student.findOneAndDelete({ _id: req.params.id }, (err, student) => {
@@ -296,14 +371,41 @@ deleteStudent = (req, res) => {
     });
   });
 };
+
+removeStudents = (req, res) => {
+  Student.deleteMany({}, (err, students) => {
+    if (err) {
+      console.error(`400 in 'removeStudents': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+      });
+    }
+    if (!students) {
+      console.error(`404 in 'removeStudents': students not found!`);
+      return res.status(404).json({
+        success: false,
+        error: 'students not found',
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      students: students,
+    });
+  });
+};
+
 //importing modules
 module.exports = {
   getStudents,
   getStudentById,
   getStudentByStuId,
   createStudent,
+  createStudents,
   updateStudent,
   deleteStudent,
   getIT_Students,
   getCS_Students,
+  removeStudents,
+  updateStudentStatus,
 };

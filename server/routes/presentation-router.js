@@ -8,7 +8,7 @@ router.get('/presentations', PresentationController.getPresentations);
 router.get('/presentation/timeslot/:id', PresentationController.getPresentationByTimeslotId);
 router.get('/presentation/:id', PresentationController.getPresentationById);
 router.post('/presentation', PresentationController.createPresentation);
-router.put('/presentation/:id', PresentationController.updatePresentation);
+router.put('/presentation/stu/:id', PresentationController.updatePresentation);
 router.delete('/presentation/:id', PresentationController.deletePresentation);
 
 module.exports = router;

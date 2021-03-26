@@ -8,10 +8,10 @@ import HomePage from './studentComponents/homepage/Home';
 import ProfilePage from './studentComponents/homepage/Profile';
 import CreateTimeSlots from './adminComponents/timeslotComponents/CreateTimeslots';
 import TimeList from './adminComponents/timeslotComponents/TimeslotsList';
-import TimeslotUpdate from './adminComponents/timeslotComponents/TimeslotUpdate';
 import CreateSupervisor from './adminComponents/supervisorComponent/CreateSupervisor';
 import AdvisorsList from './adminComponents/supervisorComponent/SupervisorList';
-
+import CreateStudent from './adminComponents/studentComponent/CreateStudent';
+import StudentsList from './adminComponents/studentComponent/StudentsList';
 function App() {
   const existingToken = localStorage.getItem('token') || '';
   const existingUsername = localStorage.getItem('username') || '';
@@ -66,9 +66,10 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/timeslots/create" component={CreateTimeSlots} />
           <Route exact path="/supervisor/create" component={CreateSupervisor} />
+          <Route exact path="/student/create" component={CreateStudent} />
+          <Route exact path="/students" component={StudentsList} />
           <Route exact path="/supervisors" component={AdvisorsList} />
           <Route exact path="/timeslots" component={TimeList} />
-          <Route exact path="/timeslot/update/:id" component={TimeslotUpdate} />
           <PrivateRoute exact path="/home" component={HomePage} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
         </Switch>

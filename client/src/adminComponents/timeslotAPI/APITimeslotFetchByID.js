@@ -10,12 +10,15 @@ const useFetchID = id => {
 
     'x-auth-token': localStorage.getItem('token'),
   };
-  const fetchApi = async (url, headers) => {
+  const fetchApi = (url, headers) => {
     setLoading(true);
-    const response = await axios.get(url, { headers });
-
-    setData(response.data.timeslots);
-    setLoading(false);
+    axios
+      .get(url, { headers })
+      .then(response => {
+        setData(response.data.timeslots);
+        setLoading(false);
+      })
+      .catch(err => console.log(err));
   };
   useEffect(() => {
     fetchApi(url, headers);

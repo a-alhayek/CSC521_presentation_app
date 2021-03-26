@@ -10,6 +10,9 @@ router.get('/timeslots/reserved', TimeslotController.getReservedTimeslots);
 router.get('/timeslot/:id', TimeslotController.getTimeslotById);
 router.post('/timeslots', TimeslotController.createTimeslots);
 router.put('/timeslot/:id', TimeslotController.updateTimeslot);
-router.delete('/timeslot/:id', TimeslotController.deleteTimeslot);
+router.put('/timeslot/status/:id', TimeslotController.changeTimeslotStatus);
 
+router.delete('/timeslot/:id', TimeslotController.deleteTimeslot);
+router.delete('/timeslots', TimeslotController.removeTimeslot);
+changeTimeslotStatus;
 module.exports = router;
