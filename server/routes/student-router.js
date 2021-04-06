@@ -17,6 +17,7 @@ router.post('/students', StudentController.createStudents);
 router.post('/student/login', auth.studentLogin);
 router.put('/student/:id', StudentController.updateStudent);
 router.put('/student/status/:id', StudentController.updateStudentStatus);
+router.put('/student/statusrest/:id', StudentController.restStudentStatus);
 router.delete('/student/:id', StudentController.deleteStudent);
 router.delete('/students', StudentController.removeStudents);
 module.exports = router;

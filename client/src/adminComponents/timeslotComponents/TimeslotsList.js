@@ -85,7 +85,7 @@ const TimeslotsList = props => {
     {
       id: 'status',
       Header: 'Timeslot Status',
-      accessor: d => (d.status ? 'Taken' : 'available'),
+      accessor: d => (d.status ? 'reserved' : 'available'),
 
       cell: props => {
         const { status } = props;

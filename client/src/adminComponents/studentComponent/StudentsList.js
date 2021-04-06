@@ -18,17 +18,21 @@ const StudentsList = () => {
   const { students, loadingStudents } = useFetchStudents();
 
   const handleOnClickDeleteAllBtn = async e => {
+    console.log(students);
     e.preventDefault();
     if (window.confirm('Are you sure you want to delete all Students??')) {
-      const url = 'http://localhost:8080/api/students';
+      let url = 'http://localhost:8080/api/students';
       const headers = {
         'Content-Type': 'application/json',
 
         'x-auth-token': localStorage.getItem('token'),
       };
       try {
-        const response = await axios.delete(url, { headers });
+        await axios.delete(url, { headers });
+        url = 'http://localhost:8080/api/presentations';
+        await axios.delete(url, { headers });
         alert('deleted all Students');
+
         window.location.reload();
       } catch (err) {
         alert('Error deleting all Students.');
@@ -45,8 +49,8 @@ const StudentsList = () => {
 };
 
 const TableList = props => {
-  const handleRemoveItem = async id => {
-    await DeleteStudent(id);
+  const handleRemoveItem = async (id, sid) => {
+    await DeleteStudent(id, sid);
     window.location.reload();
   };
 
@@ -72,7 +76,7 @@ const TableList = props => {
       accessor: 'studentid',
       filterable: true,
       cell: props => {
-        return <span data-end={props.original.advisorid}>{props.original.advisorid}</span>;
+        return <span data-end={props.original.studentid}>{props.original.studentid}</span>;
       },
     },
     {
@@ -89,7 +93,7 @@ const TableList = props => {
       accessor: d => (d.isGroup ? 'Yes' : 'No'),
 
       cell: props => {
-        const { isGroup } = props;
+        const { isGroup } = props.original;
         {
           return <span data-status={isGroup}>{isGroup}</span>;
         }
@@ -98,7 +102,7 @@ const TableList = props => {
     {
       id: 'signupStatus',
       Header: 'Signup Status',
-      accessor: d => (d.status ? 'signed up' : 'not yet'),
+      accessor: d => (d.signupStatus ? 'signed up' : 'not yet'),
 
       cell: props => {
         const { signupStatus } = props;
@@ -114,7 +118,12 @@ const TableList = props => {
       Cell: props => {
         return (
           <span data-delete-id={props.original._id}>
-            <DeleteButton id={props.original._id} item="Students" onDelete={handleRemoveItem} />
+            <DeleteButton
+              id={props.original._id}
+              sid={props.original.studentid}
+              item=""
+              onDelete={handleRemoveItem}
+            />
           </span>
         );
       },

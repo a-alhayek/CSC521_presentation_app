@@ -63,7 +63,7 @@ const TableList = props => {
       Cell: props => {
         return (
           <span data-delete-id={props.original._id}>
-            <DeleteButton id={props.original._id} item="Advisors" onDelete={handleRemoveItem} />
+            <DeleteButton id={props.original._id} item="" onDelete={handleRemoveItem} />
           </span>
         );
       },

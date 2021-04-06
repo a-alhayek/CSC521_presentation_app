@@ -51,7 +51,7 @@ const CreatePresentation = props => {
   const { advisors, loadingAdvisors } = useFetchAdvisors();
   const { timeslots, load } = useFetchTimeslots();
   const { students, loadingStudents } = useFetchStudents();
-  const [disabled, setDisabled] = useState(false);
+  //const [disabled, setDisabled] = useState(false);
   //slected by The student
   const [team, setTeam] = useState([]);
   const [selectedTimeslot, setSlectedTimeslot] = useState(null);
@@ -89,17 +89,17 @@ const CreatePresentation = props => {
   };
 
   const validateDecription = () => {
-    if (decription.length < 160) {
+    if (decription.length < 50) {
       alert('Project Decription must be more than 160 Characters');
       return false;
     }
     return true;
   };
   const validateTeam = () => {
-    if (team.length === 0) {
+    /*   if (team.length === 0) {
       alert('Please select your team-members');
       return false;
-    }
+    } */
     return true;
   };
   const validateAdvisor = () => {
@@ -119,14 +119,20 @@ const CreatePresentation = props => {
 
   const handleSubmitButton = e => {
     if (
-      !validateTimeslot() &&
-      !validateAdvisor() &&
-      !validateTeam() &&
-      !validateDecription() &&
+      !validateTimeslot() ||
+      !validateAdvisor() ||
+      !validateTeam() ||
+      !validateDecription() ||
       !validateTitle()
     ) {
       return;
     }
+    if (
+      !window.confirm(
+        'are you sure you want to Submit Presentation?\nNote: changing your Advisor and Teammates needs a faculty permission?',
+      )
+    )
+      return;
     createPresentation();
   };
   const createPresentation = async () => {
@@ -139,7 +145,7 @@ const CreatePresentation = props => {
  */
     try {
       const timeslotId = selectedTimeslot._id;
-      changeTimeslotStatus(timeslotId);
+      changeTimeslotStatusToTrue(timeslotId);
       const advisorId = selectedAdvisor.advisorid;
       const projectDescription = decription;
       const projectTitle = title;
@@ -167,11 +173,13 @@ const CreatePresentation = props => {
     }
     window.location.reload();
   };
-  const changeTimeslotStatus = async id => {
-    const url = `http://localhost:8080/api/timeslot/status/${id}`;
+  const changeTimeslotStatusToTrue = async id => {
+    const url = `http://localhost:8080/api/timeslot/statusTrue/${id}`;
     try {
-      await axios.put(url);
-    } catch (err) {}
+      await axios.put(url, { group: false });
+    } catch (err) {
+      alert(`${err}, bad request to the database`);
+    }
   };
 
   const changeStudentStatus = async id => {
@@ -184,8 +192,10 @@ const CreatePresentation = props => {
       };
  */
     try {
-      await axios.put(url);
-    } catch (err) {}
+      await axios.put(url, { group });
+    } catch (err) {
+      alert(`${err}, bad request to the database`);
+    }
   };
 
   const classes = useStyles();
@@ -262,7 +272,7 @@ const CreatePresentation = props => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
-            id="advisor-selection"
+            id="timeslot-selection"
             options={advisors || []}
             noOptionsText="No Advisors"
             loading={loadingAdvisors}

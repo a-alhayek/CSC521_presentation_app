@@ -6,7 +6,7 @@ const useFetchTimeslots = () => {
   const [load, setLoad] = useState(false);
 
   const username = localStorage.getItem('username');
-  const url = `http://localhost:8080/api/timeslots/available`;
+  const url = `http://localhost:8080/api/timeslots`;
   const headers = {
     'Content-Type': 'application/json',
 
@@ -19,7 +19,11 @@ const useFetchTimeslots = () => {
     axios
       .get(url, { headers })
       .then(response => {
-        setTimeslots(response.data.timeslots);
+        let arr = response.data.timeslots;
+        arr.sort((a, b) => {
+          return new Date(a.day + a.start.substring(4)) - new Date(b.day + b.start.substring(4));
+        });
+        setTimeslots(arr);
         setLoad(false);
       })
       .catch(err => {

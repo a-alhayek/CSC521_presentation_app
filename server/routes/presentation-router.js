@@ -10,6 +10,8 @@ router.get('/presentation/:id', PresentationController.getPresentationById);
 router.post('/presentation', PresentationController.createPresentation);
 router.put('/presentation/stu/:id', PresentationController.updatePresentation);
 router.delete('/presentation/:id', PresentationController.deletePresentation);
+router.delete('/presentationstu/:id', PresentationController.deletePresentation);
+router.delete('/presentations', PresentationController.removePresentation);
 
 module.exports = router;
 //tested on 4:20 AM on Januray/22/21 relized there's one fault in put route:

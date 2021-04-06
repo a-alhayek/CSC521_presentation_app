@@ -106,8 +106,8 @@ const CreateTimeSlots = () => {
         let mE = moment(new Date(start));
         if (i > 0) {
           mS.add(parseInt(breakDuration), 'm');
-        }
-        mE.add(parseInt(timeslotDuration), 'm');
+          mE.add(parseInt(timeslotDuration + breakDuration), 'm');
+        } else mE.add(parseInt(timeslotDuration), 'm');
 
         start = `${date}T${mE.format('kk:mm:ss')}`;
 

@@ -1,5 +1,6 @@
 require('dotenv').config();
 const Student = require('../models/student-model');
+
 const bcrypt = require('bcryptjs');
 
 getStudents = (req, res) => {
@@ -21,13 +22,13 @@ getStudents = (req, res) => {
         // message: 'error searching for timeslots'
       });
     }
-    console.log(req.studentid);
+
     console.log(`200 in 'getStudents : Students fetched!`);
     return res.status(200).json({
       success: true,
       students: students,
     });
-  });
+  }).sort({ firstName: 1, lastName: 1 });
 };
 
 getCS_Students = (req, res) => {
@@ -329,24 +330,53 @@ updateStudent = (req, res) => {
 };
 
 updateStudentStatus = (req, res) => {
-  Student.findOneAndUpdate({ studentid: req.params.id }, { signupStatus: true }, (err, student) => {
-    if (err) {
-      console.error(`404 in 'updateStudent' : Student not found`);
-      console.error(err);
-      return res.status(404).json({
-        success: false,
-        error: err,
-        message: 'Student not found!',
+  Student.findOneAndUpdate(
+    { studentid: req.params.id },
+    { signupStatus: true, isGroup: req.body.group },
+    (err, student) => {
+      if (err) {
+        console.error(`404 in 'updateStudent' : Student not found`);
+        console.error(err);
+        return res.status(404).json({
+          success: false,
+          error: err,
+          message: 'Student not found!',
+        });
+      }
+      console.log(`200 in 'updateStudent' : Student updated!`);
+      return res.status(200).json({
+        success: true,
+        id: req.params.id,
+        message: 'Student updated',
+        student: student,
       });
-    }
-    console.log(`200 in 'updateStudent' : Student updated!`);
-    return res.status(200).json({
-      success: true,
-      id: req.params.id,
-      message: 'Student updated',
-      student: student,
-    });
-  });
+    },
+  );
+};
+restStudentStatus = (req, res) => {
+  console.log(' ======================');
+  Student.findOneAndUpdate(
+    { studentid: req.params.id },
+    { signupStatus: false, isGroup: false },
+    (err, student) => {
+      if (err) {
+        console.error(`404 in 'updateStudent' : Student not found`);
+        console.error(err);
+        return res.status(404).json({
+          success: false,
+          error: err,
+          message: 'Student not found!',
+        });
+      }
+      console.log(`200 in 'updateStudent' : Student updated!`);
+      return res.status(200).json({
+        success: true,
+        id: req.params.id,
+        message: 'Student updated',
+        student: student,
+      });
+    },
+  );
 };
 // delete function
 deleteStudent = (req, res) => {
@@ -408,4 +438,5 @@ module.exports = {
   getCS_Students,
   removeStudents,
   updateStudentStatus,
+  restStudentStatus,
 };

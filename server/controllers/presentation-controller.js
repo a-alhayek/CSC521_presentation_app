@@ -128,7 +128,7 @@ createPresentation = (req, res) => {
 
 updatePresentation = (req, res) => {
   const body = req.body;
-  // console.log('----------------------- updatePresentation: req -----------------------');
+  console.log('----------------------- updatePresentation: req -----------------------');
   // console.log(req);
   // console.log('----------------------- updatePresentation: body -----------------------');
   // console.log(body);
@@ -140,7 +140,7 @@ updatePresentation = (req, res) => {
     });
   }
   const presentationForUpdate = {
-    _id: req.params.id,
+    // _id: req.params.id,
     studentsId: body.studentsId,
     timeslotId: body.timeslotId,
     advisorId: body.advisorId,
@@ -177,8 +177,32 @@ updatePresentation = (req, res) => {
     },
   );
 };
+deletePresentationByStuID = (req, res) => {
+  console.log('reached');
+  Presentation.findOneAndDelete({ studentsId: req.params.id }, (err, presentation) => {
+    if (err) {
+      console.error(`400 in 'deletePresentation': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+      });
+    }
+    if (!presentation) {
+      console.error(`404 in 'deletePresentation': presentation not found!`);
+      return res.status(404).json({
+        success: false,
+        error: 'Presentation not found',
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      presentation: presentation,
+    });
+  });
+};
 
 deletePresentation = (req, res) => {
+  console.log('reached');
   Presentation.findOneAndDelete({ _id: req.params.id }, (err, presentation) => {
     if (err) {
       console.error(`400 in 'deletePresentation': ${err}`);
@@ -196,7 +220,29 @@ deletePresentation = (req, res) => {
     }
     return res.status(200).json({
       success: true,
-      presentation: Presentation,
+      presentation: presentation,
+    });
+  });
+};
+removePresentation = (req, res) => {
+  Presentation.deleteMany({}, (err, presentations) => {
+    if (err) {
+      console.error(`400 in 'removeStudents': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+      });
+    }
+    if (!presentations) {
+      console.error(`404 in 'removeStudents': students not found!`);
+      return res.status(404).json({
+        success: false,
+        error: 'students not found',
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      presentations: presentations,
     });
   });
 };
@@ -208,4 +254,6 @@ module.exports = {
   updatePresentation,
   deletePresentation,
   getPresentationByTimeslotId,
+  removePresentation,
+  deletePresentationByStuID,
 };

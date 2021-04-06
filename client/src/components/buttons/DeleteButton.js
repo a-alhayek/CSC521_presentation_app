@@ -17,7 +17,7 @@ class DeleteButton extends Component {
     if (
       window.confirm(`Do you want to permanently delete this ${this.props.item}? ${this.props.id}`)
     ) {
-      this.props.onDelete(this.props.id);
+      this.props.onDelete(this.props.id, this.props.sid);
       alert(`${this.props.item} with ${this.props.id} have been deleted`);
     }
   };
