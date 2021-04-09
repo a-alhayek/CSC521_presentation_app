@@ -3,8 +3,9 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const timeslotRouter = require('./routes/timeslot-router');
-const advisorRouter= require('./routes/advisor-router');
-const studentRouter= require('./routes/student-router');
+const advisorRouter = require('./routes/advisor-router');
+const adminRouter = require('./routes/admin-router');
+const studentRouter = require('./routes/student-router');
 const presentationRouter = require('./routes/presentation-router');
 const bodyParser = require('body-parser');
 const db = require('./db/dbConnection');
@@ -25,11 +26,11 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 //app.all('/api/*',auth);
 
-app.use('/api',advisorRouter );
-app.use('/api',studentRouter );
+app.use('/api', advisorRouter);
+app.use('/api', studentRouter);
 
 app.use('/api', presentationRouter);
-
+app.use('/api', adminRouter);
 app.use('/api', timeslotRouter);
 
 //app.use('api/auth' , require('./routes/auth'));

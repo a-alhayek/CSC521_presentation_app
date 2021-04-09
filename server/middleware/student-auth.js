@@ -1,6 +1,8 @@
 //login function
 require('dotenv').config();
 const Student = require('../models/student-model');
+const Admin = require('../models/admin-model');
+const Advisor = require('../models/advisor-model');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -30,9 +32,9 @@ authenticateToken = (req, res, next) => {
     return;
   }
 
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, studentid) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userid) => {
     if (err) return res.status(401).json({ message: 'error in verify' });
-    req.studentid = studentid;
+    req.userid = userid;
     next();
   });
 };
@@ -93,8 +95,8 @@ studentLogin = (req, res) => {
             }
             res.send({
               token,
-              student: {
-                student: student.studentid,
+              user: {
+                user: student.studentid,
               },
               role: 'student',
             });
@@ -112,9 +114,150 @@ studentLogin = (req, res) => {
   });
 };
 
+adminLogin = async (req, res) => {
+  const body = req.body;
+  if (!body) {
+    console.error(`400 in 'adminLogin': you must provide adminId and password to login.`);
+    return res.status(400).json({
+      sucess: false,
+      error: 'You must provide a adminID and password to login.',
+    });
+  }
+  const { studentid, password } = body;
+  await Admin.findOne({ adminid: studentid }, (err, admin) => {
+    if (err) {
+      console.error(`400 in 'adminLogin': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+        message: 'error in adminLogin',
+      });
+    } else if (!admin) {
+      console.error(`404 in 'adminLogin': Adminid not found`);
+      return res.status(404).json({
+        success: false,
+        error: 'adminid not found',
+        // message: 'error searching for timeslots'
+      });
+    }
+    bcrypt.compare(password, admin.passwordHash, (err, result) => {
+      if (err) {
+        console.error(`400 in 'comparing the password': ${err}`);
+        return res.status(400).json({
+          success: false,
+          error: err,
+          message: 'error comparing the password',
+        });
+      } else if (result) {
+        jwt.sign(
+          {
+            adminid: admin.adminid,
+          },
+          process.env.ACCESS_TOKEN_SECRET,
+          (err, token) => {
+            if (err) {
+              console.error(`400 in 'adminLogin- jwt.sign token': ${err}`);
+              return res.status(400).json({
+                success: false,
+                error: err,
+                message: 'error in adminLogin- jwt.sign token',
+              });
+            }
+            res.send({
+              token,
+              user: {
+                user: admin.adminid,
+              },
+              role: 'admin',
+            });
+          },
+        );
+      } else {
+        console.error(`500 in 'adminLogin': Invalid password`);
+        return res.status(404).json({
+          success: false,
+          error: 'Invalid password',
+          // message: 'error searching for timeslots'
+        });
+      }
+    });
+  });
+};
+
+advisorLogin = async (req, res) => {
+  const body = req.body;
+  if (!body) {
+    console.error(`400 in 'advisorLogin': you must provide advisorId and password to login.`);
+    return res.status(400).json({
+      sucess: false,
+      error: 'You must provide a advisorid and password to login.',
+    });
+  }
+  const { studentid, password } = body;
+  await Advisor.findOne({ advisorid: studentid }, (err, advisor) => {
+    if (err) {
+      console.error(`400 in 'advisorLogin': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+        message: 'error in advisorLogin',
+      });
+    } else if (!advisor) {
+      console.error(`404 in 'advisorLogin': AdvisorID not found`);
+      return res.status(404).json({
+        success: false,
+        error: 'AdvisorID not found',
+        // message: 'error searching for timeslots'
+      });
+    }
+    bcrypt.compare(password, advisor.passwordHash, (err, result) => {
+      if (err) {
+        console.error(`400 in 'comparing the password': ${err}`);
+        return res.status(400).json({
+          success: false,
+          error: err,
+          message: 'error comparing the password',
+        });
+      } else if (result) {
+        jwt.sign(
+          {
+            advisorid: advisor.advisorid,
+          },
+          process.env.ACCESS_TOKEN_SECRET,
+          (err, token) => {
+            if (err) {
+              console.error(`400 in 'advisorLogin- jwt.sign token': ${err}`);
+              return res.status(400).json({
+                success: false,
+                error: err,
+                message: 'error in advisorLogin- jwt.sign token',
+              });
+            }
+            res.send({
+              token,
+              user: {
+                user: advisor.advisorid,
+              },
+            });
+          },
+        );
+      } else {
+        console.error(`500 in 'advisorLogin': Invalid password`);
+        return res.status(404).json({
+          success: false,
+          error: 'Invalid password',
+          // message: 'error searching for timeslots'
+        });
+      }
+    });
+  });
+};
+
 module.exports = {
   studentLogin,
   authenticateToken,
+  advisorLogin,
+  adminLogin,
 };
 
 /*

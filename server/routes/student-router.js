@@ -15,6 +15,8 @@ router.post('/student', StudentController.createStudent);
 router.post('/students', StudentController.createStudents);
 
 router.post('/student/login', auth.studentLogin);
+router.post('/advisor/login', auth.advisorLogin);
+router.post('/admin/login', auth.adminLogin);
 router.put('/student/:id', StudentController.updateStudent);
 router.put('/student/status/:id', StudentController.updateStudentStatus);
 router.put('/student/statusrest/:id', StudentController.restStudentStatus);

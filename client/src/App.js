@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Login from './studentComponents/auth/login';
-import CustomAppBar from './studentComponents/appbar/AppBar';
 import PrivateRoute from './studentComponents/route_types/PrivateRoute';
+import AdminRoute from './adminComponents/route_types/AdminRoute';
 import { AuthContext } from './studentComponents/auth/auth';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import HomePage from './studentComponents/homepage/Home';
@@ -60,16 +60,16 @@ function App() {
         setTheRole: setTheRole,
       }}>
       <BrowserRouter>
-        <CustomAppBar />
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/timeslots/create" component={CreateTimeSlots} />
-          <Route exact path="/supervisor/create" component={CreateSupervisor} />
-          <Route exact path="/student/create" component={CreateStudent} />
-          <Route exact path="/students" component={StudentsList} />
-          <Route exact path="/supervisors" component={AdvisorsList} />
-          <Route exact path="/timeslots" component={TimeList} />
+          <Route exact path="/advisor" component={Login} />
+          <AdminRoute exact path="/timeslots/create" component={CreateTimeSlots} />
+          <AdminRoute exact path="/supervisor/create" component={CreateSupervisor} />
+          <AdminRoute exact path="/student/create" component={CreateStudent} />
+          <AdminRoute exact path="/students" component={StudentsList} />
+          <AdminRoute exact path="/supervisors" component={AdvisorsList} />
+          <AdminRoute exact path="/timeslots" component={TimeList} />
           <PrivateRoute exact path="/home" component={HomePage} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
         </Switch>

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MoreVert } from '@material-ui/icons';
 import { Menu, MenuItem, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
-import { useAuth } from '../auth/auth';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useAuth } from '../../studentComponents/auth/auth';
+
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const CustomAppBar = () => {
   const [shouldOpenMenu, setOpenMenu] = useState(false);
   const [menuAnchor, setMenuAnchor] = useState(null);
 
-  const { setUserName, username, setAuthToken, setTheRole } = useAuth();
+  const { setUserName, username, setAuthToken, setTheRole, role } = useAuth();
 
   const closeMenu = () => {
     setOpenMenu(false);
@@ -30,7 +30,7 @@ const CustomAppBar = () => {
 
   return (
     <AppBar position="static">
-      {username ? (
+      {username && role === 'admin' ? (
         <Menu
           id="menu"
           anchorEl={menuAnchor}
@@ -38,9 +38,43 @@ const CustomAppBar = () => {
           open={shouldOpenMenu}
           onClose={() => closeMenu()}>
           <MenuItem onClick={() => closeMenu()}>
-            <Link to="/profile" style={{ textDecoration: 'none', color: '#000' }}>
+            <Link to="/students" style={{ textDecoration: 'none', color: '#000' }}>
               {' '}
-              <AccountCircleIcon herf="profile" color="primary" />
+              View Students
+            </Link>
+          </MenuItem>
+
+          <MenuItem onClick={() => closeMenu()}>
+            <Link to="/timeslots" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              View Timeslots
+            </Link>
+          </MenuItem>
+
+          <MenuItem onClick={() => closeMenu()}>
+            <Link to="/supervisors" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              View Advisors
+            </Link>
+          </MenuItem>
+
+          <MenuItem onClick={() => closeMenu()}>
+            <Link to="/student/create" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              Create Students
+            </Link>
+          </MenuItem>
+          <MenuItem onClick={() => closeMenu()}>
+            <Link to="/timeslots/create" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              Create Timeslots
+            </Link>
+          </MenuItem>
+
+          <MenuItem onClick={() => closeMenu()}>
+            <Link to="/supervisor/create" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              Create Advisor
             </Link>
           </MenuItem>
           <MenuItem onClick={() => logout()}>

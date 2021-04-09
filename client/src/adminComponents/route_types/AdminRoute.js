@@ -1,17 +1,17 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { useAuth } from '../auth/auth';
-import CustomAppBar from '../appbar/AppBar';
+import { useAuth } from '../../studentComponents/auth/auth';
+import CustomAppBar from '../admin_bar/AdminBar';
 
-const PrivateRoute = ({ component: Component, ...rest }) => {
+const AdminRoute = ({ component: Component, ...rest }) => {
   const { username, role } = useAuth();
-  const isStudent = role === 'student';
+  const isAdmin = role === 'admin';
 
   return (
     <Route
       {...rest}
       render={props =>
-        username && isStudent ? (
+        username && isAdmin ? (
           <>
             <CustomAppBar />
             <Component {...props} />
@@ -24,4 +24,4 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   );
 };
 
-export default PrivateRoute;
+export default AdminRoute;

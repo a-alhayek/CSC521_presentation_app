@@ -5,6 +5,8 @@ const router = express.Router();
 const PresentationController = require('../controllers/presentation-controller');
 
 router.get('/presentations', PresentationController.getPresentations);
+
+router.get('/presentation/advisor/:id', PresentationController.getPresentationsByAdvisor);
 router.get('/presentation/timeslot/:id', PresentationController.getPresentationByTimeslotId);
 router.get('/presentation/:id', PresentationController.getPresentationById);
 router.post('/presentation', PresentationController.createPresentation);

@@ -12,26 +12,32 @@ export const Login = props => {
   const { setUserName, setAuthToken, username, setTheRole, role } = useAuth();
 
   const onClickLogin = async () => {
-    const url = `http://localhost:8080/api/student/login`;
+    const arr = ['student', 'advisor', 'admin'];
 
     const headers = {
       'Content-Type': 'application/json',
     };
-    try {
-      const response = await axios.post(
-        url,
-        { studentid: userName, password: password },
-        {
-          headers: headers,
-        },
-      );
+    for (let userStr in arr) {
+      try {
+        const url = `http://localhost:8080/api/${arr[userStr]}/login`;
+        const response = await axios.post(
+          url,
+          { studentid: userName, password: password },
+          {
+            headers: headers,
+          },
+        );
 
-      setAuthToken(response.data.token);
-      setUserName(response.data.student.student);
-      setTheRole(response.data.role);
-    } catch (err) {
-      console.log(JSON.stringify(err));
-      alert(`You have entered wrong Username or password, please try again!, ${err.message}`);
+        setAuthToken(response.data.token);
+        setUserName(response.data.user.user);
+        setTheRole(response.data.role);
+        break;
+      } catch (err) {
+        // console.log(JSON.stringify(err));
+      }
+    }
+    if (userName === '' || !userName) {
+      alert(`You have entered wrong Username or password, please try again!`);
     }
   };
   const submitHandler = e => {
@@ -39,8 +45,17 @@ export const Login = props => {
     onClickLogin();
   };
 
-  if (username) {
+  if (username && role === 'student') {
+    // username and role needs to be edit
     return <Redirect to="/home" />;
+  }
+  if (username && role === 'admin') {
+    // username and role needs to be edit
+    return <Redirect to="/students" />;
+  }
+  if (username && role === 'admin') {
+    // username and role needs to be edit
+    return <Redirect to="/students" />;
   }
 
   return (
