@@ -1,96 +1,3 @@
-<<<<<<< HEAD
-Project: CS-Department-Presentation-SignUp
-
-This is the repository that hosts the CS Department Presentation SignUp Web App project
-=======
-# --- Hack.Diversity React/Redux Template ---
-
-## Getting Started
-Some _really_ great instructions and stuff...eventually.
-
-## Installing Node Packages
-_TBD:_
-
-Required Versions:
-- Node.js: v10.14.2
-- Either
---- npm: v6.4.1
---- yarn: v1.22.5
-
-Upgrading versions:
-- Node.js
-```
-TODO
-```
-
-- npm
-```
-TODO
-```
-
-- yarn
-```
-brew upgrade yarn
-```
-or
-```
-curl --compressed -o- -L https://yarnpkg.com/install.sh | bash
-```
-
-## Setting up MongoDB
-
-### Install with Homebrew (MacOSx)
-If you haven't previously installed mongodb:
-```
-$ brew tap mongodb/brew
-$ brew install mongodb-community
-$ brew services start mongodb-community
-```
-
-If you have a previous version of mongodb
-```
-$ brew services stop mongodb
-$ brew uninstall mongodb
-
-$ brew tap mongodb/brew
-$ brew install mongodb-community
-$ brew services start mongodb-community
-```
-
-Create directory for storing data:
-```
-$ mkdir -p /data/db
-```
-
-Execute MongoDB as service:
-```
-$ brew services start mongodb
-// this may not still be relevant?
-```
-
-Create and name database:
-```
-$ mongo
-> use items
-```
-_(In this case, `items` is the name of the database that we will be creating and using for this app.)_
-
-## Starting the Node Server
-In new tab/window:
-```
-$ cd server/
-```
-then run either:
-```
-$ yarn server
-```
-_(Note: this is running the `server` command defined in `server/package.json`.)_
-
-## References
-- [How to create your first MERN (MongoDB, Express JS, React JS and Node JS) Stack](https://medium.com/swlh/how-to-create-your-first-mern-mongodb-express-js-react-js-and-node-js-stack-7e8b20463e66)
-
-
-# --- From "Create React App" README ---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -126,7 +33,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
@@ -159,4 +66,3 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `yarn build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
->>>>>>> b9d0f1e42e47648e423d6909e8167d16275d80c4
