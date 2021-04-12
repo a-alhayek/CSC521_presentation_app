@@ -18,14 +18,16 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
     nested: {
-      paddingLeft: theme.spacing(4),
+      paddingLeft: theme.spacing(9),
     },
   },
   listtext: {
     textAlign: 'center',
+    
   },
   keylisttext: {
     textAlign: 'left',
+    
   },
 }));
 
