@@ -157,7 +157,7 @@ const CreatePresentation = props => {
         studentsId.push(team[i].studentid);
         changeStudentStatus(team[i].studentid);
       }
-
+      console.log('failed');
       const response = await axios.post(url, {
         timeslotId,
         advisorId,

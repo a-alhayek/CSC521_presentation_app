@@ -12,6 +12,8 @@ import CreateSupervisor from './adminComponents/supervisorComponent/CreateSuperv
 import AdvisorsList from './adminComponents/supervisorComponent/SupervisorList';
 import CreateStudent from './adminComponents/studentComponent/CreateStudent';
 import StudentsList from './adminComponents/studentComponent/StudentsList';
+import AdvisorHome from './advisorComponents/AdvisorHome';
+import AdvisorRoute from './advisorComponents/route_types/AdvisorRoute';
 function App() {
   const existingToken = localStorage.getItem('token') || '';
   const existingUsername = localStorage.getItem('username') || '';
@@ -63,7 +65,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/login" component={Login} />
-          <Route exact path="/advisor" component={Login} />
+          <AdvisorRoute exact path="/advisor" component={AdvisorHome} />
           <AdminRoute exact path="/timeslots/create" component={CreateTimeSlots} />
           <AdminRoute exact path="/supervisor/create" component={CreateSupervisor} />
           <AdminRoute exact path="/student/create" component={CreateStudent} />

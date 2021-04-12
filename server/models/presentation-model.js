@@ -12,7 +12,6 @@ const PresentationSchema = new Schema({
       // creating an array of String(s)
       type: String,
       required: true,
-      unique: true,
     },
   ],
   advisorId: {

@@ -10,7 +10,7 @@ router.get('/advisors/IT', AdvisorController.getIT_Advisors);
 router.get('/advisor/:id', AdvisorController.getAdvisorById);
 router.get('/advisor/adv/:id', AdvisorController.getAdvisorByAdvId);
 router.post('/advisor', AdvisorController.createAdvisor);
-router.post('/advisor/login', AdvisorController.advisorLogin);
+
 router.put('/advisor/:id', AdvisorController.updateAdvisor);
 router.delete('/advisor/:id', AdvisorController.deleteAdvisor);
 

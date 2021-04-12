@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 export const Login = props => {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
+
   const { setUserName, setAuthToken, username, setTheRole, role } = useAuth();
 
   const onClickLogin = async () => {
@@ -17,6 +18,7 @@ export const Login = props => {
     const headers = {
       'Content-Type': 'application/json',
     };
+    let accses = false;
     for (let userStr in arr) {
       try {
         const url = `http://localhost:8080/api/${arr[userStr]}/login`;
@@ -31,12 +33,14 @@ export const Login = props => {
         setAuthToken(response.data.token);
         setUserName(response.data.user.user);
         setTheRole(response.data.role);
+        accses = true;
         break;
       } catch (err) {
         // console.log(JSON.stringify(err));
       }
     }
-    if (userName === '' || !userName) {
+    console.log(userName);
+    if (!accses) {
       alert(`You have entered wrong Username or password, please try again!`);
     }
   };
@@ -53,9 +57,9 @@ export const Login = props => {
     // username and role needs to be edit
     return <Redirect to="/students" />;
   }
-  if (username && role === 'admin') {
+  if (username && role === 'advisor') {
     // username and role needs to be edit
-    return <Redirect to="/students" />;
+    return <Redirect to="/advisor" />;
   }
 
   return (

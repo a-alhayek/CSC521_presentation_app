@@ -193,6 +193,7 @@ advisorLogin = async (req, res) => {
       error: 'You must provide a advisorid and password to login.',
     });
   }
+  console.log(body);
   const { studentid, password } = body;
   await Advisor.findOne({ advisorid: studentid }, (err, advisor) => {
     if (err) {
@@ -238,6 +239,7 @@ advisorLogin = async (req, res) => {
               user: {
                 user: advisor.advisorid,
               },
+              role: 'advisor',
             });
           },
         );

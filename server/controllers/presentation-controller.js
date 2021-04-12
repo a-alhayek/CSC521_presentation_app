@@ -125,7 +125,7 @@ createPresentation = (req, res) => {
       message: "'presentation' is malformed",
     });
   }
-  // console.log('----------------------- createTimeslot: timeslot -----------------------')
+  console.log('----------------------- presentations-----------------------');
   // console.log(timeslot);
 
   return presentation
