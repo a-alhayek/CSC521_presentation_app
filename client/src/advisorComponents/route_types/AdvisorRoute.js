@@ -14,6 +14,7 @@ const AdvisorRoute = ({ component: Component, ...rest }) => {
         username && isAdvisor ? (
           <>
             <CustomAppBar />
+
             <Component {...props} />
           </>
         ) : (

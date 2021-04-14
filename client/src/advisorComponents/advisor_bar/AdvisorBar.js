@@ -45,7 +45,7 @@ const CustomAppBar = () => {
           </MenuItem>
 
           <MenuItem onClick={() => closeMenu()}>
-            <Link to="/profile" style={{ textDecoration: 'none', color: '#000' }}>
+            <Link to="/advisor/profile" style={{ textDecoration: 'none', color: '#000' }}>
               {' '}
               profile
             </Link>

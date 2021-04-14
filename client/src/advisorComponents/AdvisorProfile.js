@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import useFetch from '../util/APIStudentFetch';
-import { useAuth } from '../auth/auth';
+import React from 'react';
+import useFetch from './util/APIFetchAdvisor';
+import { useAuth } from '../../src/studentComponents/auth/auth';
 import { Redirect } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,21 +29,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ProfilePage = () => {
+const AdvisorProfile = () => {
   const { username } = useAuth();
 
   const { data } = useFetch();
-  useEffect(() => {
-    console.log('I fire once in profile page');
-  });
 
   if (!username) {
     return <Redirect to="/login" />;
   }
-  return <Table student={data}></Table>;
+  return <Table advisor={data}></Table>;
 };
 
-const Table = ({ student }) => {
+const Table = ({ advisor }) => {
   let counter = 0;
   const classes = useStyles();
 
@@ -52,14 +49,10 @@ const Table = ({ student }) => {
       return 'First Name:';
     } else if (key === 'lastName') {
       return 'Last Name:';
-    } else if (key === 'majors') {
+    } else if (key === 'major') {
       return 'Major:';
     } else if (key === 'email') return 'Email:';
-    else if (key === 'isGroup') return 'Group Project:';
-    else if (key === 'studentid') return 'Student ID:';
-    else {
-      return 'Sign Up Status:';
-    }
+    else if (key === 'advisorid') return 'Advisor ID:';
   };
 
   return (
@@ -71,14 +64,10 @@ const Table = ({ student }) => {
           </ListItemIcon>
           <ListItemText primary="Student Profile" />
         </ListItem>
-        {student
-          ? Object.keys(student).map(key => {
-              let field = student[key];
+        {advisor
+          ? Object.keys(advisor).map(key => {
+              let field = advisor[key];
               if (key === '_id' || key === 'passwordHash' || key === '__v') return null;
-              if (key === 'isGroup')
-                field === false ? (field = 'Individual Project') : (field = 'Group Project');
-              if (key === 'signupStatus')
-                field === false ? (field = 'Need to Sign up') : (field = 'Signed up');
 
               return (
                 <ListItem key={++counter}>
@@ -94,4 +83,4 @@ const Table = ({ student }) => {
   );
 };
 
-export default ProfilePage;
+export default AdvisorProfile;

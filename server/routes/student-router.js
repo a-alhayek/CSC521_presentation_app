@@ -7,7 +7,7 @@ const StudentController = require('../controllers/student-controller');
 const auth = require('../middleware/student-auth');
 
 router.get('/students', StudentController.getStudents);
-router.get('/students/CS', auth.authenticateToken, StudentController.getCS_Students);
+router.post('/students/CS', StudentController.getCS_Students);
 router.get('/students/IT', auth.authenticateToken, StudentController.getIT_Students);
 router.get('/student/:id', auth.authenticateToken, StudentController.getStudentById);
 router.get('/student/stu/:id', StudentController.getStudentByStuId);

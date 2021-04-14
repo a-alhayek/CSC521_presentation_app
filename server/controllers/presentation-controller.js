@@ -151,7 +151,26 @@ createPresentation = (req, res) => {
       });
     });
 };
-
+confirmPresenation = (req, res) => {
+  Presentation.findOneAndUpdate({ _id: req.params.id }, { confirm: true }, (err, pres) => {
+    if (err) {
+      console.error(`404 in 'confirmPresenation' : Presentation not found`);
+      console.error(err);
+      return res.status(404).json({
+        success: false,
+        error: err,
+        message: 'Presenation not found!',
+      });
+    }
+    console.log(`200 in 'confirmPresenation' : Presenation updated!`);
+    return res.status(200).json({
+      success: true,
+      id: req.params.id,
+      message: 'Presenation updated',
+      presentation: pres,
+    });
+  });
+};
 updatePresentation = (req, res) => {
   const body = req.body;
   console.log('----------------------- updatePresentation: req -----------------------');
@@ -283,4 +302,5 @@ module.exports = {
   removePresentation,
   deletePresentationByStuID,
   getPresentationsByAdvisor,
+  confirmPresenation,
 };

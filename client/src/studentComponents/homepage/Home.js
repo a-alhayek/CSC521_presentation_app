@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import useFetch from '../util/APIPresentationFetch';
 import { withRouter, Redirect } from 'react-router-dom';
-import { Grid, Typography, TextField, makeStyles } from '@material-ui/core';
+import { Grid, Typography, TextField } from '@material-ui/core';
 import { useAuth } from '../auth/auth';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import styled from 'styled-components';

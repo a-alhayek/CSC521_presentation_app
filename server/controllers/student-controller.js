@@ -32,7 +32,7 @@ getStudents = (req, res) => {
 };
 
 getCS_Students = (req, res) => {
-  Student.find({ major: 'CS' }, (err, students) => {
+  Student.find({ studentid: req.body.studentsIds }, (err, students) => {
     if (err) {
       console.error(`400 in 'getCS_Students': ${err}`);
       return res.status(400).json({

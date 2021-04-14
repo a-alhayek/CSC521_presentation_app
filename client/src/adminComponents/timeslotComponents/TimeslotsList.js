@@ -30,7 +30,7 @@ const TimeList = () => {
         'x-auth-token': localStorage.getItem('token'),
       };
       try {
-        const response = await axios.delete(url, { headers });
+        await axios.delete(url, { headers });
         alert('deleted all timeslots');
         window.location.reload();
       } catch (err) {
@@ -86,7 +86,6 @@ const TimeslotsList = props => {
       id: 'status',
       Header: 'Timeslot Status',
       accessor: d => (d.status ? 'reserved' : 'available'),
-
       cell: props => {
         const { status } = props;
         {
