@@ -89,7 +89,7 @@ const CreatePresentation = props => {
   };
 
   const validateDecription = () => {
-    if (decription.length < 50) {
+    if (decription.length < 160) {
       alert('Project Decription must be more than 160 Characters');
       return false;
     }

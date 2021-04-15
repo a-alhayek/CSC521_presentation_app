@@ -6,6 +6,7 @@ const PresentationController = require('../controllers/presentation-controller')
 
 router.get('/presentations', PresentationController.getPresentations);
 
+router.get('/presentations/confirm', PresentationController.getConfirmedPresentations);
 router.get('/presentation/advisor/:id', PresentationController.getPresentationsByAdvisor);
 router.get('/presentation/timeslot/:id', PresentationController.getPresentationByTimeslotId);
 router.get('/presentation/:id', PresentationController.getPresentationById);

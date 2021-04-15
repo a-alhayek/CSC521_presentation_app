@@ -25,6 +25,31 @@ getPresentations = (req, res) => {
     });
   });
 };
+getConfirmedPresentations = (req, res) => {
+  Presentation.find({ confirm: true }, (err, presentations) => {
+    if (err) {
+      console.error(`400 in 'getPresentation ': ${err}`);
+      return res.status(400).json({
+        success: false,
+        error: err,
+        message: 'error searching for presentation',
+      });
+    }
+    if (!presentations.length) {
+      console.error(`404 in 'getpresentation': presentations not found`);
+      return res.status(404).json({
+        success: false,
+        error: 'presentation not found',
+        // message: 'error searching for presentations'
+      });
+    }
+    console.log(`200 in 'getPresentations : presentations fetched!`);
+    return res.status(200).json({
+      success: true,
+      presentation: presentations,
+    });
+  });
+};
 
 getPresentationsByAdvisor = (req, res) => {
   Presentation.find({ advisorId: req.params.id }, (err, presentations) => {
@@ -303,4 +328,5 @@ module.exports = {
   deletePresentationByStuID,
   getPresentationsByAdvisor,
   confirmPresenation,
+  getConfirmedPresentations,
 };

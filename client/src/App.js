@@ -16,6 +16,7 @@ import AdvisorHome from './advisorComponents/AdvisorHome';
 import AdvisorProfile from './advisorComponents/AdvisorProfile';
 import AdvisorStudent from './advisorComponents/AdvisorStudent';
 import AdvisorRoute from './advisorComponents/route_types/AdvisorRoute';
+import Schedule from './Presenations/Presenations';
 function App() {
   const existingToken = localStorage.getItem('token') || '';
   const existingUsername = localStorage.getItem('username') || '';
@@ -67,6 +68,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/login" component={Login} />
+          <Route exact path="/schedule" component={Schedule} />
           <AdvisorRoute exact path="/advisor/profile" component={AdvisorProfile} />
           <AdvisorRoute exact path="/advisor" component={AdvisorHome} />
           <AdvisorRoute exact path="/advisor/:presentId" component={AdvisorStudent} />

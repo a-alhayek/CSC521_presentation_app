@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
+import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
 
 const Delete = styled.div.attrs({
@@ -23,7 +23,13 @@ class DeleteButton extends Component {
   };
 
   render() {
-    return <Delete onClick={this.confirmDeleteItem}>Delete {this.props.item}</Delete>;
+    return (
+      <div>
+        <Button variant="contained" color="secondary" onClick={this.confirmDeleteItem}>
+          Delete {this.props.item}
+        </Button>
+      </div>
+    );
   }
 }
 

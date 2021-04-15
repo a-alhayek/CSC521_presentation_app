@@ -18,7 +18,12 @@ const useFetch = () => {
     axios
       .get(url, { headers })
       .then(response => {
-        setData(response.data.timeslots);
+        let arr = response.data.timeslots;
+
+        arr.sort((a, b) => {
+          return new Date(a.day + a.start.substring(4)) - new Date(b.day + b.start.substring(4));
+        });
+        setData(arr);
         setLoading(false);
       })
       .catch(err => console.log(err));

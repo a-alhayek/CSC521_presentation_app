@@ -40,6 +40,7 @@ const HomePage = () => {
   const [firstRender, setfirstRender] = useState(false);
   const [selectedTimeslot, setSlectedTimeslot] = useState(null);
   const [selectedAdvisor, setSelectedAdvisor] = useState(null);
+
   const [team, setTeam] = useState([]);
 
   const { username } = useAuth();
@@ -109,7 +110,7 @@ const HomePage = () => {
   };
 
   const validateDecription = () => {
-    if (decription.length < 50) {
+    if (decription.length < 160) {
       alert('Project Decription must be more than 160 Characters');
       return false;
     }
@@ -363,7 +364,14 @@ const HomePage = () => {
 
           <Grid item xs={12} sm={12}>
             {data ? (
-              <DeleteButton id={data._id} item="Presentation" onDelete={handleRemoveItem} />
+              <div>
+                <DeleteButton
+                  variant="contained"
+                  id={data._id}
+                  item="Presentation"
+                  onDelete={handleRemoveItem}
+                />
+              </div>
             ) : null}
           </Grid>
         </Grid>
