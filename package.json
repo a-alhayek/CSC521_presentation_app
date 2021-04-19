@@ -30,6 +30,7 @@
         "@upstatement/prettier-config": "^0.3.0"
     },
     "dependencies": {
+        "emailjs-com": "^2.6.4",
         "jspdf": "^2.3.1",
         "jspdf-autotable": "^3.5.14",
         "node-notifier": "^8.0.1",

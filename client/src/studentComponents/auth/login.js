@@ -39,7 +39,7 @@ export const Login = props => {
         // console.log(JSON.stringify(err));
       }
     }
-    console.log(userName);
+
     if (!accses) {
       alert(`You have entered wrong Username or password, please try again!`);
     }

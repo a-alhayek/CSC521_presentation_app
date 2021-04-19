@@ -3,7 +3,7 @@ import FetchData from './FetchData';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
-
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import Button from '@material-ui/core/Button';
@@ -35,9 +35,10 @@ const TableList = props => {
     {
       Header: 'Project Decription',
       accessor: 'dcrip',
+      width: 500,
 
       cell: props => {
-        return <span data-date={props.original.dcrip}>{props.value}</span>;
+        return <div data-date={props.original.dcrip}>{props.value}</div>;
       },
     },
     {

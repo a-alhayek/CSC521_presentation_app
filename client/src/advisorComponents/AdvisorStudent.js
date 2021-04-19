@@ -8,6 +8,10 @@ import { useAuth } from '../../src/studentComponents/auth/auth';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, TextField } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import emailjs from 'emailjs-com';
+import { init } from 'emailjs-com';
+init('user_HgcebxsjXw4RA1wXLpTow');
 const Title = styled.h1.attrs({
   className: 'h1',
 })``;
@@ -35,7 +39,7 @@ const StudentProfile = props => {
   const classes = useStyles();
   const { presentId } = props.match.params;
   const { title, decrip, confirm, studentsIds, timeslotID } = props.location.state;
-
+  const [note, setNote] = useState('');
   const { students, loadingStudents } = useFetchStudent(studentsIds); // find many or one student.
   const { timeslot, loadingTimeslot } = useFetchTimeslot(timeslotID); //fine timeslot and return it
 
@@ -49,13 +53,64 @@ const StudentProfile = props => {
       alert(`Error ${err.message}`);
       return;
     }
+    try {
+      const templateParams = {
+        to_email: students[0].email,
+        to_name: `${students[0].firstName}  ${students[0].lastName}`,
+        message: 'Your presentation confirmed! \nGoodluck',
+      };
+
+      const result = await emailjs.send(
+        'service_q3ramr9',
+        'template_g26e554', //default template
+        templateParams,
+        'user_HgcebxsjXw4RA1wXLpTow',
+      );
+      alert(`sent confirmation to ${students[0].firstName}`);
+    } catch (err) {
+      console.log(err);
+      alert('failed to notify student');
+    }
+
     setRedirect(true);
     alert('Thank you! Presenation Confirmed');
+  };
+  const noteChange = e => {
+    setNote(e.target.value);
+  };
+  const sendNote = async e => {
+    e.preventDefault();
+
+    if (!students) {
+      return;
+    }
+    try {
+      const templateParams = {
+        to_email: students[0].email,
+        to_name: `${students[0].firstName}  ${students[0].lastName}`,
+        message: note,
+      };
+
+      const result = await emailjs.send(
+        'service_q3ramr9',
+        'template_g26e554', //default template
+        templateParams,
+        'user_HgcebxsjXw4RA1wXLpTow',
+      );
+      alert('message sent');
+      setNote('');
+    } catch (err) {
+      console.log(err);
+      alert('failed to send message');
+    }
   };
   if (redirect) {
     return <Redirect to="/advisor" />;
   }
 
+  if (!username) {
+    return <Redirect to="/login" />;
+  }
   return (
     <div className={classes.root}>
       {students ? (
@@ -106,11 +161,33 @@ const StudentProfile = props => {
             </Grid>
             <div>
               <Button
+                style={{ margin: '20px' }}
                 variant="contained"
                 color="primary"
                 disabled={confirm}
                 onClick={confirmPresentation}>
                 {props.confirm ? 'confirmed' : 'confirm'}
+              </Button>
+            </div>
+            <div>
+              <Typography style={{ margin: '20px' }} variant="h5" component="p">
+                If you don't wanna confirm, please send a note to the student telling them why!
+              </Typography>
+              <TextareaAutosize
+                style={{ margin: '20px' }}
+                aria-label="max height"
+                rowsMin={3}
+                value={note}
+                onChange={noteChange}
+              />
+            </div>
+            <div>
+              <Button
+                style={{ margin: '20px' }}
+                variant="contained"
+                color="primary"
+                onClick={sendNote}>
+                Send note
               </Button>
             </div>
           </Grid>{' '}

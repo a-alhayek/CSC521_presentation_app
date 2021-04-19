@@ -14,6 +14,9 @@ import DeleteButton from '../../components/buttons/DeleteButton';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import '../student-styles/homeStyle.css';
+import emailjs from 'emailjs-com';
+import { init } from 'emailjs-com';
+init('user_HgcebxsjXw4RA1wXLpTow');
 
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
@@ -167,9 +170,16 @@ const HomePage = () => {
     const advisorId = selectedAdvisor.advisorid;
     const projectDescription = decription;
     const projectTitle = title;
+    let fullName = '';
     let studentsId = [];
     for (let i = 0; i < team.length; i++) {
       studentsId.push(team[i].studentid);
+    }
+    for (let i = 0; i < students.length; i++) {
+      if (students[i].studentid === username) {
+        fullName = `${students[i].firstName} ${students[i].lastName}`;
+        break;
+      }
     }
     const confirm = false;
     try {
@@ -182,10 +192,29 @@ const HomePage = () => {
         confirm,
       });
       alert(`${response.data.message}`);
-      window.location.reload();
     } catch (err) {
       alert(`${err}, bad request to the database`);
     }
+    try {
+      const templateParams = {
+        from_name: fullName,
+        to_email: selectedAdvisor.email,
+        to_name: `${selectedAdvisor.firstName}  ${selectedAdvisor.lastName}`,
+        message:
+          'has updated their presentation details. Please review their presentation details.',
+        action: 'updated',
+      };
+
+      const result = await emailjs.send(
+        'service_q3ramr9',
+        'template_36bf04t', //create template
+        templateParams,
+        'user_HgcebxsjXw4RA1wXLpTow',
+      );
+    } catch (err) {
+      console.log(err);
+    }
+    window.location.reload();
   };
   const changeTimeslotStatusToTrue = async id => {
     const url = `http://localhost:8080/api/timeslot/statusTrue/${id}`;

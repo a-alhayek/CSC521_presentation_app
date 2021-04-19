@@ -17,6 +17,7 @@ import AdvisorProfile from './advisorComponents/AdvisorProfile';
 import AdvisorStudent from './advisorComponents/AdvisorStudent';
 import AdvisorRoute from './advisorComponents/route_types/AdvisorRoute';
 import Schedule from './Presenations/Presenations';
+import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
 function App() {
   const existingToken = localStorage.getItem('token') || '';
   const existingUsername = localStorage.getItem('username') || '';
@@ -55,34 +56,39 @@ function App() {
   };
 
   return (
-    <AuthContext.Provider
-      value={{
-        authToken,
-        setAuthToken: setToken,
-        username,
-        setUserName: setUserName,
-        role,
-        setTheRole: setTheRole,
-      }}>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={Login} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/schedule" component={Schedule} />
-          <AdvisorRoute exact path="/advisor/profile" component={AdvisorProfile} />
-          <AdvisorRoute exact path="/advisor" component={AdvisorHome} />
-          <AdvisorRoute exact path="/advisor/:presentId" component={AdvisorStudent} />
-          <AdminRoute exact path="/timeslots/create" component={CreateTimeSlots} />
-          <AdminRoute exact path="/supervisor/create" component={CreateSupervisor} />
-          <AdminRoute exact path="/student/create" component={CreateStudent} />
-          <AdminRoute exact path="/students" component={StudentsList} />
-          <AdminRoute exact path="/supervisors" component={AdvisorsList} />
-          <AdminRoute exact path="/timeslots" component={TimeList} />
-          <PrivateRoute exact path="/home" component={HomePage} />
-          <PrivateRoute exact path="/profile" component={ProfilePage} />
-        </Switch>
-      </BrowserRouter>
-    </AuthContext.Provider>
+    <React.Fragment>
+      <ScopedCssBaseline>
+        <AuthContext.Provider
+          value={{
+            authToken,
+            setAuthToken: setToken,
+            username,
+            setUserName: setUserName,
+            role,
+            setTheRole: setTheRole,
+          }}>
+          <BrowserRouter>
+            <Switch>
+              <Route exact path="/" component={Login} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/schedule" component={Schedule} />
+              <AdvisorRoute exact path="/schedule/advisor" component={Schedule} />
+              <AdvisorRoute exact path="/advisor/profile" component={AdvisorProfile} />
+              <AdvisorRoute exact path="/advisor" component={AdvisorHome} />
+              <AdvisorRoute exact path="/advisor/:presentId" component={AdvisorStudent} />
+              <AdminRoute exact path="/timeslots/create" component={CreateTimeSlots} />
+              <AdminRoute exact path="/supervisor/create" component={CreateSupervisor} />
+              <AdminRoute exact path="/student/create" component={CreateStudent} />
+              <AdminRoute exact path="/students" component={StudentsList} />
+              <AdminRoute exact path="/supervisors" component={AdvisorsList} />
+              <AdminRoute exact path="/timeslots" component={TimeList} />
+              <PrivateRoute exact path="/home" component={HomePage} />
+              <PrivateRoute exact path="/profile" component={ProfilePage} />
+            </Switch>
+          </BrowserRouter>
+        </AuthContext.Provider>
+      </ScopedCssBaseline>
+    </React.Fragment>
   );
 }
 

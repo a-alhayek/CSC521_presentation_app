@@ -25,25 +25,25 @@ const CustomAppBar = () => {
         </Link>
 
         <MenuItem>
-          <Link to="/advisor" style={{ textDecoration: 'none', color: '#000' }}>
+          <Link to="/advisor" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
             {' '}
             Students
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link to="/schedule" style={{ textDecoration: 'none', color: '#000' }}>
+          <Link to="/schedule/advisor" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
             {' '}
             Schedule
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link to="/advisor/profile" style={{ textDecoration: 'none', color: '#000' }}>
+          <Link to="/advisor/profile" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
             {' '}
             profile
           </Link>
         </MenuItem>
         <MenuItem onClick={() => logout()}>
-          <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
+          <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
             <ExitToAppIcon color="error" />
           </Link>
         </MenuItem>

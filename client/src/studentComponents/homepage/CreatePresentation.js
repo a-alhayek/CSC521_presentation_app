@@ -12,6 +12,10 @@ import Button from '@material-ui/core/Button';
 import useFetchStudents from '../../adminComponents/studentAPI/APIStudentsFetch';
 import useFetchAdvisors from '../../adminComponents/supervisorAPI/APIAdvisorsFetch';
 import axios from 'axios';
+import emailjs from 'emailjs-com';
+import { init } from 'emailjs-com';
+init('user_HgcebxsjXw4RA1wXLpTow');
+
 const Title = styled.h1.attrs({
   className: 'h1',
 })``;
@@ -51,12 +55,14 @@ const CreatePresentation = props => {
   const { advisors, loadingAdvisors } = useFetchAdvisors();
   const { timeslots, load } = useFetchTimeslots();
   const { students, loadingStudents } = useFetchStudents();
+
   //const [disabled, setDisabled] = useState(false);
   //slected by The student
   const [team, setTeam] = useState([]);
   const [selectedTimeslot, setSlectedTimeslot] = useState(null);
   const [selectedAdvisor, setSelectedAdvisor] = useState(null);
   const { username } = useAuth();
+
   const titleEdit = str => {
     return str.replace(/(?:^|\s)\w/g, function(match) {
       return match.toUpperCase();
@@ -141,8 +147,10 @@ const CreatePresentation = props => {
         'Content-Type': 'application/json',
     
         'x-auth-token': localStorage.getItem('token'),
+        
       };
  */
+    let fullName = '';
     try {
       const timeslotId = selectedTimeslot._id;
       changeTimeslotStatusToTrue(timeslotId);
@@ -157,7 +165,13 @@ const CreatePresentation = props => {
         studentsId.push(team[i].studentid);
         changeStudentStatus(team[i].studentid);
       }
-      console.log('failed');
+      for (let i = 0; i < students.length; i++) {
+        if (students[i].studentid === username) {
+          fullName = `${students[i].firstName} ${students[i].lastName}`;
+          break;
+        }
+      }
+
       const response = await axios.post(url, {
         timeslotId,
         advisorId,
@@ -171,7 +185,27 @@ const CreatePresentation = props => {
     } catch (err) {
       alert(`${err}, bad request to the database`);
     }
+    try {
+      const templateParams = {
+        from_name: fullName,
+        to_email: selectedAdvisor.email,
+        to_name: `${selectedAdvisor.firstName}  ${selectedAdvisor.lastName}`,
+        message:
+          'has signed up for their Capstone project presentation, they have choose you as advisor. Please review the presentation details.',
+        action: 'created',
+      };
+
+      const result = await emailjs.send(
+        'service_q3ramr9',
+        'template_36bf04t', //create template
+        templateParams,
+        'user_HgcebxsjXw4RA1wXLpTow',
+      );
+    } catch (err) {
+      console.log(err);
+    }
     window.location.reload();
+    //  window.location.reload();
   };
   const changeTimeslotStatusToTrue = async id => {
     const url = `http://localhost:8080/api/timeslot/statusTrue/${id}`;
