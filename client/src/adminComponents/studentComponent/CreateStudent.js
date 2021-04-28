@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import * as XLSX from 'xlsx';
+import { host } from '../../components/host';
 //import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
 const useStyles = makeStyles(theme => ({
@@ -39,11 +40,11 @@ const CreateStudent = () => {
   const [isGroup, setIsGroup] = useState(false);
   const [signupStatus, setSignupStatus] = useState(false);
 
-  const setStudentIDOnChange = e => setStudentid(e.target.value);
-  const setEmailOnChange = e => setEmail(e.target.value);
-  const setFirstNameOnChange = e => setFirstName(e.target.value);
-  const setLastNameOnChange = e => setLastName(e.target.value);
-  const setMajorOnChange = e => setMajor(e.target.value);
+  const setStudentIDOnChange = e => setStudentid(e.target.value.trim());
+  const setEmailOnChange = e => setEmail(e.target.value.trim());
+  const setFirstNameOnChange = e => setFirstName(e.target.value.trim());
+  const setLastNameOnChange = e => setLastName(e.target.value.trim());
+  const setMajorOnChange = e => setMajor(e.target.value.trim());
   const [redirect, setRedirect] = useState(null);
 
   const validateStudentID = () => {
@@ -97,7 +98,7 @@ const CreateStudent = () => {
       const lName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
       console.log(fName);
       console.log(lName);
-      const url = `http://localhost:8080/api/student`;
+      const url = `${host}student`;
       const student = {
         studentid: sID,
         firstName: fName,
@@ -334,7 +335,7 @@ const UploadStudents = props => {
       students[0]['major']
     ) {
       alert(`Attempting to add ${students.length - 1} students to the database!`);
-      const url = `http://localhost:8080/api/students`;
+      const url = `${host}students`;
       /*  const headers = {
       'Content-Type': 'application/json',
 

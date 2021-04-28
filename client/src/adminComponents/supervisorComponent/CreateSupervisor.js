@@ -7,6 +7,7 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { host } from '../../components/host';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 5,
@@ -35,11 +36,11 @@ const CreateSupervisor = () => {
   const [major, setMajor] = useState('CS');
   const [redirect, setRedirect] = useState(null);
 
-  const setAdvisorIdOnChange = e => setAdvisorid(e.target.value);
-  const setFirstNameOnChange = e => setFirstName(e.target.value);
-  const setLastNameOnChange = e => setLastName(e.target.value);
-  const setEmailOnChange = e => setEmail(e.target.value);
-  const setMajorOnChange = e => setMajor(e.target.value);
+  const setAdvisorIdOnChange = e => setAdvisorid(e.target.value.trim());
+  const setFirstNameOnChange = e => setFirstName(e.target.value.trim());
+  const setLastNameOnChange = e => setLastName(e.target.value.trim());
+  const setEmailOnChange = e => setEmail(e.target.value.trim());
+  const setMajorOnChange = e => setMajor(e.target.value.trim());
 
   const validateAdvisorID = () => {
     const reg = /^\d+$/;
@@ -92,7 +93,7 @@ const CreateSupervisor = () => {
       const lName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
       console.log(fName);
       console.log(lName);
-      const url = `http://localhost:8080/api/advisor`;
+      const url = `${host}advisor`;
       const advisor = {
         advisorid: advisorid,
         firstName: fName,

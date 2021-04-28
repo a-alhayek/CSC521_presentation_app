@@ -1,7 +1,7 @@
 import axios from 'axios';
-
+import { host } from '../../components/host';
 const DeleteTimeslot = id => {
-  const url = `http://localhost:8080/api/timeslot/${id}`;
+  const url = `${host}timeslot/${id}`;
   const headers = {
     'Content-Type': 'application/json',
 

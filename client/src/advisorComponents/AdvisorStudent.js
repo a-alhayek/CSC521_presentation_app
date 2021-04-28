@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import emailjs from 'emailjs-com';
 import { init } from 'emailjs-com';
+import { host } from '../components/host';
 init('user_HgcebxsjXw4RA1wXLpTow');
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -46,7 +47,7 @@ const StudentProfile = props => {
   const confirmPresentation = async e => {
     e.preventDefault();
     if (!window.confirm('are you sure you want to confirm?')) return;
-    const url = `http://localhost:8080/api/presentation/${presentId}`;
+    const url = `${host}presentation/${presentId}`;
     try {
       const response = await axios.put(url);
     } catch (err) {

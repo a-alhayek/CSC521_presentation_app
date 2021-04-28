@@ -7,7 +7,7 @@ import DeleteButton from '../../components/buttons/DeleteButton';
 import UpdateButton from './TimeslotUpdate';
 import Button from '@material-ui/core/Button';
 import updateTimeslot from '../timeslotAPI/APITImeslotUpdate';
-
+import { host } from '../../components/host';
 import 'react-table-6/react-table.css';
 import axios from 'axios';
 const Wrapper = styled.div`
@@ -23,7 +23,7 @@ const TimeList = () => {
   const handleOnClickDeleteAllBtn = async e => {
     e.preventDefault();
     if (window.confirm('Are you sure you want to delete all timeslots??')) {
-      const url = 'http://localhost:8080/api/timeslots';
+      const url = `${host}timeslots`;
       const headers = {
         'Content-Type': 'application/json',
 

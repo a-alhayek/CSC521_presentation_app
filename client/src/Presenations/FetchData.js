@@ -1,17 +1,19 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import { host } from '../components/host';
 
 const useFetchTimeslots = () => {
   const [data, setData] = useState(null);
   const [load, setLoad] = useState(false);
 
-  const presUrl = `http://localhost:8080/api/presentations/confirm`;
-  const stuUrl = `http://localhost:8080/api/students`;
-  const advUrl = `http://localhost:8080/api/advisors`;
-  const timeUrl = `http://localhost:8080/api/timeslots`;
+  const presUrl = `${host}presentations/confirm`;
+  const stuUrl = `${host}students`;
+  const advUrl = `${host}advisors`;
+  const timeUrl = `${host}timeslots`;
 
   const fetchApi = async (presUrl, stuUrl, advUrl, timeUrl) => {
     setLoad(true);
+
     try {
       const presResponse = await axios.get(presUrl);
       const timeResponse = await axios.get(timeUrl);

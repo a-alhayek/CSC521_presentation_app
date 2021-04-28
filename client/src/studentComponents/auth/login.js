@@ -5,6 +5,7 @@ import { useAuth } from './auth';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 //import { updateAppSettings } from "../util";
+import { host } from '../../components/host';
 
 export const Login = props => {
   const [userName, setUsername] = useState('');
@@ -21,7 +22,7 @@ export const Login = props => {
     let accses = false;
     for (let userStr in arr) {
       try {
-        const url = `http://localhost:8080/api/${arr[userStr]}/login`;
+        const url = `${host}${arr[userStr]}/login`;
         const response = await axios.post(
           url,
           { studentid: userName, password: password },

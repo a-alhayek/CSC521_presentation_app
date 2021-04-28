@@ -72,7 +72,7 @@ function App() {
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/schedule" component={Schedule} />
-              <AdvisorRoute exact path="/schedule/advisor" component={Schedule} />
+
               <AdvisorRoute exact path="/advisor/profile" component={AdvisorProfile} />
               <AdvisorRoute exact path="/advisor" component={AdvisorHome} />
               <AdvisorRoute exact path="/advisor/:presentId" component={AdvisorStudent} />
@@ -82,8 +82,15 @@ function App() {
               <AdminRoute exact path="/students" component={StudentsList} />
               <AdminRoute exact path="/supervisors" component={AdvisorsList} />
               <AdminRoute exact path="/timeslots" component={TimeList} />
+
               <PrivateRoute exact path="/home" component={HomePage} />
               <PrivateRoute exact path="/profile" component={ProfilePage} />
+              {/*
+                <PrivateRoute exact path="/schedule" component={Schedule} />
+                 <AdminRoute exact path="/schedule" component={Schedule} />
+                   <AdvisorRoute exact path="/schedule" component={Schedule} />
+
+                */}
             </Switch>
           </BrowserRouter>
         </AuthContext.Provider>

@@ -8,6 +8,7 @@ import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import { host } from '../../components/host';
 
 //import usePostTimeSlot from '../studentComponents/util/timeslotAPI/APITimeslotPost';
 
@@ -119,7 +120,7 @@ const CreateTimeSlots = () => {
         };
         timeslots.push(timeslot);
       }
-      const url = `http://localhost:8080/api/timeslots`;
+      const url = `${host}timeslots`;
       /*  const headers = {
         'Content-Type': 'application/json',
     

@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-
+import { host } from '../../components/host';
 const useFetchID = id => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const url = `http://localhost:8080/api/timeslot/${id}`;
+  const url = `${host}timeslot/${id}`;
   const headers = {
     'Content-Type': 'application/json',
 

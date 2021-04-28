@@ -16,6 +16,7 @@ import axios from 'axios';
 import '../student-styles/homeStyle.css';
 import emailjs from 'emailjs-com';
 import { init } from 'emailjs-com';
+import { host } from '../../components/host';
 init('user_HgcebxsjXw4RA1wXLpTow');
 
 const Wrapper = styled.div`
@@ -165,7 +166,7 @@ const HomePage = () => {
     updatePresentation();
   };
   const updatePresentation = async () => {
-    const url = `http://localhost:8080/api/presentation/stu/${data._id}`;
+    const url = `${host}presentation/stu/${data._id}`;
     const timeslotId = selectedTimeslot._id;
     const advisorId = selectedAdvisor.advisorid;
     const projectDescription = decription;
@@ -217,7 +218,7 @@ const HomePage = () => {
     window.location.reload();
   };
   const changeTimeslotStatusToTrue = async id => {
-    const url = `http://localhost:8080/api/timeslot/statusTrue/${id}`;
+    const url = `${host}timeslot/statusTrue/${id}`;
     try {
       await axios.put(url);
     } catch (err) {
@@ -225,7 +226,7 @@ const HomePage = () => {
     }
   };
   const changeTimeslotStatusToFalse = async id => {
-    const url = `http://localhost:8080/api/timeslot/statusFalse/${id}`;
+    const url = `${host}timeslot/statusFalse/${id}`;
     try {
       await axios.put(url);
     } catch (err) {
@@ -235,7 +236,7 @@ const HomePage = () => {
   const handleRemoveItem = async id => {
     try {
       changeTimeslotStatusToFalse(data.timeslotId);
-      const url = `http://localhost:8080/api/presentation/${id}`;
+      const url = `${host}presentation/${id}`;
       await axios.delete(url);
     } catch (err) {
       alert(`${err}, bad request to the database`);
@@ -247,7 +248,7 @@ const HomePage = () => {
       for (let i = 0; i < team.length; i++) {
         const id = team[i].studentid;
 
-        const url = `http://localhost:8080/api/student/statusrest/${id}`;
+        const url = `${host}student/statusrest/${id}`;
         await axios.put(url);
       }
     } catch (err) {

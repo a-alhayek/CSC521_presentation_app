@@ -1,8 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "private": true,
-  "proxy": "http://localhost8080:",
+  "proxy": "http://18.207.234.85:8080",
   "engines": {
     "node": ">=10.14.2",
     "npm": ">=6.4.1",

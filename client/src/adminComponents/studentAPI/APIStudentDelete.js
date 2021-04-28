@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { host } from '../../components/host';
 
 const DeleteStudent = (id, sid) => {
-  const url = `http://localhost:8080/api/student/${id}`;
-  const surl = `http://localhost:8080/api/presentationstu/${sid}`;
+  const url = `${host}student/${id}`;
+  const surl = `${host}presentationstu/${sid}`;
   const headers = {
     'Content-Type': 'application/json',
 

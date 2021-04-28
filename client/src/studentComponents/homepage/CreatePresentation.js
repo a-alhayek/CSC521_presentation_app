@@ -14,6 +14,7 @@ import useFetchAdvisors from '../../adminComponents/supervisorAPI/APIAdvisorsFet
 import axios from 'axios';
 import emailjs from 'emailjs-com';
 import { init } from 'emailjs-com';
+import { host } from '../../components/host';
 init('user_HgcebxsjXw4RA1wXLpTow');
 
 const Title = styled.h1.attrs({
@@ -142,7 +143,7 @@ const CreatePresentation = props => {
     createPresentation();
   };
   const createPresentation = async () => {
-    const url = `http://localhost:8080/api/presentation`;
+    const url = `${host}presentation`;
     /*  const headers = {
         'Content-Type': 'application/json',
     
@@ -208,7 +209,7 @@ const CreatePresentation = props => {
     //  window.location.reload();
   };
   const changeTimeslotStatusToTrue = async id => {
-    const url = `http://localhost:8080/api/timeslot/statusTrue/${id}`;
+    const url = `${host}timeslot/statusTrue/${id}`;
     try {
       await axios.put(url, { group: false });
     } catch (err) {
@@ -217,7 +218,7 @@ const CreatePresentation = props => {
   };
 
   const changeStudentStatus = async id => {
-    const url = `http://localhost:8080/api/student/status/${id}`;
+    const url = `${host}student/status/${id}`;
 
     /*  const headers = {
         'Content-Type': 'application/json',

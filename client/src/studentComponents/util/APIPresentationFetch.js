@@ -1,12 +1,12 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-
+import { host } from '../../components/host';
 const useFetch = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const username = localStorage.getItem('username');
-  const url = `http://localhost:8080/api/presentation/${username}`;
+  const url = `${host}presentation/${username}`;
   const headers = {
     'Content-Type': 'application/json',
 

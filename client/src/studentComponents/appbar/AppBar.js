@@ -43,6 +43,12 @@ const CustomAppBar = () => {
               <AccountCircleIcon herf="profile" color="primary" />
             </Link>
           </MenuItem>
+          <MenuItem onClick={() => closeMenu()}>
+            <Link to="/schedule" style={{ textDecoration: 'none', color: '#000' }}>
+              {' '}
+              Schedule
+            </Link>
+          </MenuItem>
           <MenuItem onClick={() => logout()}>
             <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
               <ExitToAppIcon color="error" />

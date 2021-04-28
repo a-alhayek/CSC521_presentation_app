@@ -7,6 +7,7 @@ import DeleteStudent from '../studentAPI/APIStudentDelete';
 import Button from '@material-ui/core/Button';
 import 'react-table-6/react-table.css';
 import axios from 'axios';
+import { host } from '../../components/host';
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
@@ -21,7 +22,7 @@ const StudentsList = () => {
     console.log(students);
     e.preventDefault();
     if (window.confirm('Are you sure you want to delete all Students??')) {
-      let url = 'http://localhost:8080/api/students';
+      let url = `${host}students`;
       const headers = {
         'Content-Type': 'application/json',
 
@@ -29,7 +30,7 @@ const StudentsList = () => {
       };
       try {
         await axios.delete(url, { headers });
-        url = 'http://localhost:8080/api/presentations';
+        url = `${host}presentations`;
         await axios.delete(url, { headers });
         alert('deleted all Students');
 

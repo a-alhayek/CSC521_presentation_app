@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-
+import { host } from '../../components/host';
 const useFetch = () => {
   const [students, setData] = useState(null);
   const [loadingStudents, setLoading] = useState(false);
 
-  const url = `http://localhost:8080/api/students`;
+  const url = `${host}students`;
   const headers = {
     'Content-Type': 'application/json',
 

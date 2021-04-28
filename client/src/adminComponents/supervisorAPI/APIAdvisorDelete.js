@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { host } from '../../components/host';
 
 const DeleteAdvisor = id => {
-  const url = `http://localhost:8080/api/advisor/${id}`;
+  const url = `${host}advisor/${id}`;
   const headers = {
     'Content-Type': 'application/json',
 
