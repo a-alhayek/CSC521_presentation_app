@@ -3,6 +3,7 @@ import FetchData from './FetchData';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
+
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
@@ -35,11 +36,13 @@ const TableList = props => {
     {
       Header: 'Project Decription',
       accessor: 'dcrip',
-      width: 500,
+      width: 320,
 
-      cell: props => {
-        return <div data-date={props.original.dcrip}>{props.value}</div>;
-      },
+      Cell: row => (
+        <TextareaAutosize disabled={true} style={{ width: 300, borderColor: 'black' }}>
+          {row.original.dcrip}
+        </TextareaAutosize>
+      ),
     },
     {
       Header: 'Team Members',
