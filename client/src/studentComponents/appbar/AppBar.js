@@ -44,7 +44,7 @@ const CustomAppBar = () => {
             </Link>
           </MenuItem>
           <MenuItem onClick={() => closeMenu()}>
-            <Link to="/schedule" style={{ textDecoration: 'none', color: '#000' }}>
+            <Link to="/schedule/student" style={{ textDecoration: 'none', color: '#000' }}>
               {' '}
               Schedule
             </Link>

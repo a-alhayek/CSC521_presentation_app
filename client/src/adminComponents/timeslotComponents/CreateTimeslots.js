@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import 'react-datetime/css/react-datetime.css';
 import Datetime from 'react-datetime';
 import moment from 'moment';
-import { Grid, Typography, TextField, Paper } from '@material-ui/core';
+import { Grid, Typography, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
@@ -14,7 +14,10 @@ import { host } from '../../components/host';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 5,
+    '& .MuiTextField-root': {
+      margin: theme.spacing(1),
+      width: '25ch',
+    },
   },
   paper: {
     padding: theme.spacing(3),
@@ -25,7 +28,13 @@ const useStyles = makeStyles(theme => ({
     },
   },
   textField: {
-    height: '2.5ch',
+    width: '25ch',
+  },
+  label: {
+    textAlign: 'right',
+    clear: 'both',
+    float: 'left',
+    marginRight: '15px',
   },
 }));
 const Title = styled.h1.attrs({
@@ -169,105 +178,92 @@ const DatePickeer = props => {
         {
           //time slot number code block
         }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">How many timeslots:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+        <form className={classes.root}>
+          <div style={{ margin: 20 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>
+              How many timeslots:
+            </Typography>
+
             <TextField
               required
-              id="standard-required"
-              label="Required"
-              className={classes.textField}
+              id="standard-required1"
+              variant="outlined"
+              color="secondary"
+              placeholder="required"
               onChange={props.setNumber}
               value={props.quantity}
             />
-          </Paper>
-        </Grid>
-        {
-          //duration code block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Timeslot Duration in mins:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          </div>
+          {
+            //duration code block
+          }{' '}
+          <div style={{ margin: 20 }}>
+            <Typography className={classes.label} style={{ marginTop: 13 }}>
+              Timeslot Duration in mins:
+            </Typography>
+
             <TextField
               required
               id="standard-required"
-              label="Required"
+              color="secondary"
+              variant="outlined"
+              placeholder="required"
               className={classes.textField}
               // defaultValue={20} //  ask Bo about it
               value={props.duration}
               onChange={props.setDuration}
             />
-          </Paper>
-        </Grid>
-        {
-          // break duration code block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Break Duration between timeslots in mins:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          </div>
+          {
+            // break duration code block
+          }
+          <div style={{ margin: 20 }}>
+            <Typography color="textPrimary" className={classes.label} style={{ marginTop: 13 }}>
+              Break Duration between timeslots in mins:
+            </Typography>
             <TextField
               required
-              id="standard-required"
-              label="Required"
+              id="standard-required2"
+              variant="outlined"
+              placeholder="required"
+              color="secondary"
               className={classes.textField}
               // defaultValue={20} //  ask Bo about it
               value={props.breakDuration}
               onChange={props.setBreakDuration}
             />
-          </Paper>
-        </Grid>
-        {
-          //Starting time code block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Event Starting At:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          </div>
+          {
+            //Starting time code block
+          }
+          <div style={{ margin: 20 }}>
+            <Typography color="textPrimary" className={classes.label}>
+              Event Starting At:
+            </Typography>
             <Datetime dateFormat={false} onChange={props.setStart} />
-          </Paper>
-        </Grid>
-
-        {
-          //date calender time block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Event Date:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+            {
+              //date calender time block
+            }
+          </div>
+          <div style={{ margin: 20 }}>
+            <Typography color="textPrimary" className={classes.label}>
+              Event Date:
+            </Typography>
             <Datetime timeFormat={false} isValidDate={valid} onChange={props.setDate} />
-          </Paper>
-        </Grid>
-        {
-          // submit button
-        }
-
-        <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>
-            <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" onClick={props.handleSubmit}>
-                Submit
-              </Button>
-            </label>
-          </Paper>
-        </Grid>
+          </div>
+          {
+            // submit button
+          }
+          <label className={classes.label} htmlFor="contained-button-file">
+            <Button
+              style={{ marginLeft: 20 }}
+              variant="contained"
+              color="primary"
+              onClick={props.handleSubmit}>
+              Submit
+            </Button>
+          </label>
+        </form>
       </Grid>
     </div>
   );

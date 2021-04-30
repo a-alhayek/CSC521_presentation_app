@@ -31,7 +31,7 @@ const CustomAppBar = () => {
           </Link>
         </MenuItem>
         <MenuItem>
-          <Link to="/schedule" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
+          <Link to="/schedule/advisor" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
             {' '}
             Schedule
           </Link>

@@ -1,106 +1,231 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { MoreVert } from '@material-ui/icons';
-import { Menu, MenuItem, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+import React from 'react';
 import { useAuth } from '../../studentComponents/auth/auth';
+import clsx from 'clsx';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import { useHistory, useLocation } from 'react-router-dom';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+const drawerWidth = 240;
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+  },
+
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: drawerWidth,
+    //  width: "inherit",
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 0,
+  },
+  active: {
+    background: '#ffaa80',
+  },
+
+  palette: {
+    primary: {
+      main: '#cc0044',
+    },
+  },
+}));
 
 const CustomAppBar = () => {
-  const [shouldOpenMenu, setOpenMenu] = useState(false);
-  const [menuAnchor, setMenuAnchor] = useState(null);
+  const menuItems = [
+    {
+      text: 'schedule',
+      path: '/schedule',
+      icon: <ScheduleIcon />,
+    },
+    {
+      text: ' View Students',
+      icon: <AccountCircleIcon />,
+      path: '/students',
+    },
+
+    {
+      text: 'Create Students',
+      path: '/student/create',
+      icon: <AddCircleOutlineIcon />,
+    },
+    {
+      text: 'View Timeslots',
+      path: '/timeslots',
+      icon: <AccountCircleIcon />,
+    },
+
+    {
+      text: 'Create Timeslots',
+
+      path: '/timeslots/create',
+      icon: <AddCircleOutlineIcon />,
+    },
+    {
+      text: 'View Advisors',
+      path: '/supervisors',
+      icon: <AccountCircleIcon />,
+    },
+
+    {
+      text: 'Create Advisors',
+      path: '/supervisor/create',
+      icon: <AddCircleOutlineIcon />,
+    },
+    {
+      text: 'Logout',
+      path: '/',
+      icon: <ExitToAppIcon />,
+    },
+  ];
+  const history = useHistory();
+  const location = useLocation();
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = React.useState(false);
+
+  // const [redirect, setRedirect] = useState(null);
 
   const { setUserName, username, setAuthToken, setTheRole, role } = useAuth();
-
-  const closeMenu = () => {
-    setOpenMenu(false);
-  };
-
-  const openMenu = e => {
-    setOpenMenu(true);
-    setMenuAnchor(e.currentTarget);
-  };
 
   const logout = () => {
     setUserName();
     setAuthToken();
     setTheRole();
-    closeMenu();
+  };
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = path => {
+    setOpen(false);
+    if (path === '/') {
+      logout();
+    }
+    history.push(path);
   };
 
   return (
-    <AppBar position="static">
-      {username && role === 'admin' ? (
-        <Menu
-          id="menu"
-          anchorEl={menuAnchor}
-          keepMounted
-          open={shouldOpenMenu}
-          onClose={() => closeMenu()}>
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/students" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              View Students
-            </Link>
-          </MenuItem>
+    <div className={classes.root} style={{ marginBottom: 80 }}>
+      <CssBaseline />
 
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/timeslots" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              View Timeslots
-            </Link>
-          </MenuItem>
-
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/supervisors" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              View Advisors
-            </Link>
-          </MenuItem>
-
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/student/create" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              Create Students
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/timeslots/create" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              Create Timeslots
-            </Link>
-          </MenuItem>
-
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/supervisor/create" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              Create Advisor
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/schedule" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              Schedule
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={() => logout()}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
-              <ExitToAppIcon color="error" />
-            </Link>
-          </MenuItem>
-        </Menu>
-      ) : null}
-      <Toolbar>
-        {username ? (
-          <IconButton edge="start" color="inherit" onClick={e => openMenu(e)}>
-            <MoreVert />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}>
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}>
+            <MenuIcon />
           </IconButton>
-        ) : null}
-        <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
-          <Typography variant="h6">YouPresent</Typography>
-        </Link>
-      </Toolbar>
-    </AppBar>
+          <Typography variant="h6" noWrap>
+            Administrator
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      {username && role === 'admin' ? (
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={open}
+          classes={{
+            paper: classes.drawerPaper,
+          }}>
+          <div className={classes.drawerHeader}>
+            <Typography component="h1" style={{ fontWeight: 'bold', fontSize: '20px' }}>
+              Menu
+            </Typography>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </div>
+          <List>
+            {menuItems.map(item => (
+              <ListItem
+                color=""
+                button
+                key={item.text}
+                onClick={() => handleDrawerClose(item.path)}
+                className={location.pathname === item.path ? classes.active : null}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
+      ) : null}
+    </div>
   );
 };
 
