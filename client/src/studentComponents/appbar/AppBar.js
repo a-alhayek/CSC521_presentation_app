@@ -1,71 +1,52 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MoreVert } from '@material-ui/icons';
-import { Menu, MenuItem, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
+
+import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
 import { useAuth } from '../auth/auth';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+const useStyles = makeStyles({
+  root: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    justifyContent: 'right',
+    marginLeft: '75%',
+    color: 'white',
+    border: 0,
+    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    padding: 10,
+  },
+});
 const CustomAppBar = () => {
-  const [shouldOpenMenu, setOpenMenu] = useState(false);
-  const [menuAnchor, setMenuAnchor] = useState(null);
-
-  const { setUserName, username, setAuthToken, setTheRole } = useAuth();
-
-  const closeMenu = () => {
-    setOpenMenu(false);
-  };
-
-  const openMenu = e => {
-    setOpenMenu(true);
-    setMenuAnchor(e.currentTarget);
-  };
+  const { setUserName, username, setAuthToken, setTheRole, role } = useAuth();
 
   const logout = () => {
     setUserName();
     setAuthToken();
     setTheRole();
-    closeMenu();
   };
+  const classes = useStyles();
 
   return (
     <AppBar position="static">
-      {username ? (
-        <Menu
-          id="menu"
-          anchorEl={menuAnchor}
-          keepMounted
-          open={shouldOpenMenu}
-          onClose={() => closeMenu()}>
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/profile" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              <AccountCircleIcon herf="profile" color="primary" />
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={() => closeMenu()}>
-            <Link to="/schedule/student" style={{ textDecoration: 'none', color: '#000' }}>
-              {' '}
-              Schedule
-            </Link>
-          </MenuItem>
-          <MenuItem onClick={() => logout()}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#000' }}>
-              <ExitToAppIcon color="error" />
-            </Link>
-          </MenuItem>
-        </Menu>
+      {username && role === 'student' ? (
+        <Toolbar>
+          <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF', margin: 10 }}>
+            <Typography variant="h6">YouPresent</Typography>
+          </Link>
+          <Link to="/profile" style={{ textDecoration: 'none', color: '#FFFFFF', margin: 10 }}>
+            {' '}
+            <Typography variant="h6">Profile</Typography>
+          </Link>
+          <Link
+            to="/schedule/student"
+            style={{ textDecoration: 'none', color: '#FFFFFF', margin: 10 }}>
+            <Typography variant="h6">Schedule</Typography>
+          </Link>
+
+          <Button className={classes.root} onClick={() => logout()} component={Link} to="/">
+            Logout
+          </Button>
+        </Toolbar>
       ) : null}
-      <Toolbar>
-        {username ? (
-          <IconButton edge="start" color="inherit" onClick={e => openMenu(e)}>
-            <MoreVert />
-          </IconButton>
-        ) : null}
-        <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
-          <Typography variant="h6">YouPresent</Typography>
-        </Link>
-      </Toolbar>
     </AppBar>
   );
 };

@@ -33,9 +33,6 @@ const ProfilePage = () => {
   const { username } = useAuth();
 
   const { data } = useFetch();
-  useEffect(() => {
-    console.log('I fire once in profile page');
-  });
 
   if (!username) {
     return <Redirect to="/login" />;

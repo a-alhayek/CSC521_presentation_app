@@ -39,9 +39,10 @@ const TableList = props => {
       width: 320,
 
       Cell: row => (
-        <TextareaAutosize disabled={true} style={{ width: 300, borderColor: 'black' }}>
-          {row.original.dcrip}
-        </TextareaAutosize>
+        <TextareaAutosize
+          value={row.original.dcrip}
+          disabled={true}
+          style={{ width: 300, borderColor: 'black' }}></TextareaAutosize>
       ),
     },
     {

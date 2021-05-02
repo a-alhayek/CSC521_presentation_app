@@ -99,7 +99,7 @@ const CustomAppBar = () => {
   const menuItems = [
     {
       text: 'schedule',
-      path: '/schedule',
+      path: '/schedule/admin',
       icon: <ScheduleIcon />,
     },
     {

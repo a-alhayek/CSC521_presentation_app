@@ -13,7 +13,7 @@ import AdvisorsList from './adminComponents/supervisorComponent/SupervisorList';
 import CreateStudent from './adminComponents/studentComponent/CreateStudent';
 import StudentsList from './adminComponents/studentComponent/StudentsList';
 import AdvisorHome from './advisorComponents/AdvisorHome';
-import AdvisorProfile from './advisorComponents/AdvisorProfile';
+
 import AdvisorStudent from './advisorComponents/AdvisorStudent';
 import AdvisorRoute from './advisorComponents/route_types/AdvisorRoute';
 import Schedule from './Presenations/Presenations';
@@ -75,7 +75,7 @@ function App() {
               <AdminRoute exact path="/schedule" component={Schedule} />
 
               <AdvisorRoute exact path="/schedule/advisor" component={Schedule} />
-              <AdvisorRoute exact path="/advisor/profile" component={AdvisorProfile} />
+
               <AdvisorRoute exact path="/advisor" component={AdvisorHome} />
               <AdvisorRoute exact path="/advisor/:presentId" component={AdvisorStudent} />
 

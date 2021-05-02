@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { withRouter, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import useFetchStudent from './util/FetchStudents';
 import useFetchTimeslot from './util/FetchTimeslot';
 import styled from 'styled-components';
@@ -49,7 +49,7 @@ const StudentProfile = props => {
     if (!window.confirm('are you sure you want to confirm?')) return;
     const url = `${host}presentation/${presentId}`;
     try {
-      const response = await axios.put(url);
+      await axios.put(url);
     } catch (err) {
       alert(`Error ${err.message}`);
       return;
@@ -60,8 +60,7 @@ const StudentProfile = props => {
         to_name: `${students[0].firstName}  ${students[0].lastName}`,
         message: 'Your presentation confirmed! \nGoodluck',
       };
-
-      const result = await emailjs.send(
+      await emailjs.send(
         'service_q3ramr9',
         'template_g26e554', //default template
         templateParams,

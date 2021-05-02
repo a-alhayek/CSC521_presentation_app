@@ -2,13 +2,13 @@
 
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-
+import { host } from '../../components/host';
 const useFetchTimeslot = id => {
   const [timeslot, setData] = useState(null);
   const [loadingTimeslot, setLoading] = useState(false);
 
   const username = localStorage.getItem('username');
-  const url = `http://localhost:8080/api/timeslot/${id}`;
+  const url = `${host}timeslot/${id}`;
   const headers = {
     'Content-Type': 'application/json',
 

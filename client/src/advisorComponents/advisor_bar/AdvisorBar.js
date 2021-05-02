@@ -36,12 +36,7 @@ const CustomAppBar = () => {
             Schedule
           </Link>
         </MenuItem>
-        <MenuItem>
-          <Link to="/advisor/profile" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
-            {' '}
-            profile
-          </Link>
-        </MenuItem>
+
         <MenuItem onClick={() => logout()}>
           <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF' }}>
             <ExitToAppIcon color="error" />

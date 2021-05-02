@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-
+import { host } from '../../components/host';
 const useFetchPresentations = id => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const url = `http://localhost:8080/api/presentation/advisor/${id}`;
+  const url = `${host}presentation/advisor/${id}`;
   const headers = {
     'Content-Type': 'application/json',
 

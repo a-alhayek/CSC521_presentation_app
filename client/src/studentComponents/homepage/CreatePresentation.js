@@ -239,19 +239,24 @@ const CreatePresentation = props => {
       <Title>Create Presentation</Title>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
-          <Typography color="textPrimary">Project Title:</Typography>
+          <Typography style={{ marginTop: 7 }} color="textPrimary">
+            Project Title:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             id="project-title"
-            label="Project Title"
+            placeholder="Project Title"
+            variant="outlined"
             onChange={onChangeSetTitle}
             value={title}
           />
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Typography color="textPrimary">Project Decription:</Typography>
+          <Typography style={{ marginTop: 15 }} color="textPrimary">
+            Project Decription:
+          </Typography>
         </Grid>
 
         <Grid item xs={12} sm={6}>
@@ -265,7 +270,9 @@ const CreatePresentation = props => {
         </Grid>
 
         <Grid item xs={12} sm={6}>
-          <Typography color="textPrimary">Project Work:</Typography>
+          <Typography style={{ marginTop: 7 }} color="textPrimary">
+            Project Work:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControlLabel
@@ -275,7 +282,9 @@ const CreatePresentation = props => {
         </Grid>
         {group ? (
           <Grid item xs={12} sm={6}>
-            <Typography color="textPrimary">Select Teammates:</Typography>
+            <Typography style={{ marginTop: 7 }} color="textPrimary">
+              Select Teammates:
+            </Typography>
           </Grid>
         ) : null}
         {group ? (
@@ -297,13 +306,15 @@ const CreatePresentation = props => {
               filterOptions={filterStudents}
               style={{ width: 300 }}
               renderInput={params => (
-                <TextField {...params} label="Select Students" variant="outlined" />
+                <TextField {...params} placeholder="Select Students" variant="outlined" />
               )}
             />{' '}
           </Grid>
         ) : null}
         <Grid item xs={12} sm={6}>
-          <Typography color="textPrimary">Project Advisor:</Typography>
+          <Typography style={{ marginTop: 7 }} color="textPrimary">
+            Project Advisor:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
@@ -318,12 +329,14 @@ const CreatePresentation = props => {
             filterOptions={filterAdvisors}
             style={{ width: 300 }}
             renderInput={params => (
-              <TextField {...params} label="Select Advisor" variant="outlined" />
+              <TextField {...params} placeholder="Select Advisor" variant="outlined" />
             )}
           />{' '}
         </Grid>
         <Grid item xs={12} sm={6}>
-          <Typography color="textPrimary">Project day and time:</Typography>
+          <Typography style={{ marginTop: 7 }} color="textPrimary">
+            Project day and time:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Autocomplete
@@ -339,7 +352,7 @@ const CreatePresentation = props => {
             filterOptions={filterTimeslots}
             style={{ width: 300 }}
             renderInput={params => (
-              <TextField {...params} label="Select Timeslot-time" variant="outlined" />
+              <TextField {...params} placeholder="Select Timeslot-time" variant="outlined" />
             )}
           />{' '}
         </Grid>

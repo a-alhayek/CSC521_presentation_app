@@ -275,29 +275,35 @@ const HomePage = () => {
   return (
     <Wrapper>
       {data || loading ? (
-        <Grid container container spacing={3}>
+        <Grid container container spacing={3} style={{ marginTop: 5 }}>
           <Title>Update Presentation</Title>
           {!loading && !load && !loadingStudents && !loadingAdvisors ? (
             <>
               <Grid item xs={12} sm={6}></Grid>
               <Grid item xs={12} sm={6}>
-                <Typography color="textPrimary">Project Title:</Typography>
+                <Typography style={{ marginTop: 7 }} color="textPrimary">
+                  Project Title:
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
                   id="project-title"
-                  label="Project Title"
+                  placeholder="Project Title"
+                  variant="outlined"
                   onChange={onChangeSetTitle}
                   value={title}
                 />
               </Grid>
 
               <Grid item xs={12} sm={6}>
-                <Typography color="textPrimary">Project Decription:</Typography>
+                <Typography style={{ marginTop: 20 }} color="textPrimary">
+                  Project Decription:
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextareaAutosize
                   aria-label="minimum height"
+                  style={{ width: 350 }}
                   rowsMin={4}
                   placeholder="Project Decription"
                   onChange={onChangeSetDecription}
@@ -305,7 +311,9 @@ const HomePage = () => {
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography color="textPrimary">Project day and time:</Typography>
+                <Typography style={{ marginTop: 7 }} color="textPrimary">
+                  Project day and time:
+                </Typography>
               </Grid>
               {timeslots && !load ? (
                 <Grid item xs={12} sm={6}>
@@ -329,7 +337,9 @@ const HomePage = () => {
                 </Grid>
               ) : null}
               <Grid item xs={12} sm={6}>
-                <Typography color="textPrimary">Project Advisor:</Typography>
+                <Typography style={{ marginTop: 7 }} color="textPrimary">
+                  Project Advisor:
+                </Typography>
               </Grid>
               {advisors && !loadingAdvisors ? (
                 <Grid item xs={12} sm={6}>
@@ -354,7 +364,9 @@ const HomePage = () => {
               ) : null}
 
               <Grid item xs={12} sm={6}>
-                <Typography color="textPrimary">Team:</Typography>
+                <Typography style={{ marginTop: 7 }} color="textPrimary">
+                  Team:
+                </Typography>
               </Grid>
               {students && !loadingStudents ? (
                 <Grid item xs={12} sm={6}>
