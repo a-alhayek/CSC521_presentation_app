@@ -41,8 +41,8 @@ const StudentProfile = props => {
   const { presentId } = props.match.params;
   const { title, decrip, confirm, studentsIds, timeslotID } = props.location.state;
   const [note, setNote] = useState('');
-  const { students, loadingStudents } = useFetchStudent(studentsIds); // find many or one student.
-  const { timeslot, loadingTimeslot } = useFetchTimeslot(timeslotID); //fine timeslot and return it
+  const { students } = useFetchStudent(studentsIds); // find many or one student.
+  const { timeslot } = useFetchTimeslot(timeslotID); //fine timeslot and return it
 
   const confirmPresentation = async e => {
     e.preventDefault();
@@ -91,7 +91,7 @@ const StudentProfile = props => {
         message: note,
       };
 
-      const result = await emailjs.send(
+      await emailjs.send(
         'service_q3ramr9',
         'template_g26e554', //default template
         templateParams,
@@ -115,28 +115,24 @@ const StudentProfile = props => {
     <div className={classes.root}>
       {students ? (
         <div>
-          <Title>{props.titile}</Title>
           <Grid container style={{ width: '100%' }} direction="column">
-            <Grid item xs={3}>
-              <Typography
-                style={{ margin: '20px' }}
-                color="textPrimary"
-                variant="h3"
-                component="h1">
-                {title}
+            <Grid style={{ margin: '20px' }} item xs={3}>
+              <Typography color="textPrimary" variant="h4" component="h1">
+                Title: {title}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              <Typography style={{ margin: '20px' }} variant="h5" component="p">
-                {decrip}
+            <Grid style={{ margin: '20px' }} item xs={3}>
+              <Typography variant="h5" component="p">
+                Description: {decrip}
               </Typography>
             </Grid>
-            <Grid item xs={3}>
-              Team members:
+            <Grid style={{ margin: '20px' }} item xs={3}>
+              <Typography variant="h5">Presenters:</Typography>
+
               {students
                 ? students.map(x => {
                     return (
-                      <Typography key={x._id}>
+                      <Typography variant="h5" key={x._id}>
                         {x.firstName} {x.lastName}
                       </Typography>
                     );
