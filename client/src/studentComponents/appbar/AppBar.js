@@ -1,14 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { AppBar, Toolbar, Typography, Button, makeStyles } from '@material-ui/core';
+import { AppBar, Toolbar, Tabs, Tab, Button, makeStyles } from '@material-ui/core';
 import { useAuth } from '../auth/auth';
 
 const useStyles = makeStyles({
   root: {
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    justifyContent: 'right',
-    marginLeft: '75%',
     color: 'white',
     border: 0,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
@@ -29,18 +27,20 @@ const CustomAppBar = () => {
     <AppBar position="static">
       {username && role === 'student' ? (
         <Toolbar>
-          <Link to="/" style={{ textDecoration: 'none', color: '#FFFFFF', margin: 10 }}>
-            <Typography variant="h6">YouPresent</Typography>
-          </Link>
-          <Link to="/profile" style={{ textDecoration: 'none', color: '#FFFFFF', margin: 10 }}>
-            {' '}
-            <Typography variant="h6">Profile</Typography>
-          </Link>
-          <Link
-            to="/schedule/student"
-            style={{ textDecoration: 'none', color: '#FFFFFF', margin: 10 }}>
-            <Typography variant="h6">Schedule</Typography>
-          </Link>
+          <Tabs>
+            <Tab label="YouPresent" component={Link} to="/" />
+          </Tabs>
+          <Tabs>
+            <Tab label="Profile" style={{ marginRight: 10 }} component={Link} to="/profile" />
+          </Tabs>
+          <Tabs>
+            <Tab
+              label="Schedule"
+              style={{ marginRight: 999 }}
+              component={Link}
+              to="/schedule/student"
+            />
+          </Tabs>
 
           <Button className={classes.root} onClick={() => logout()} component={Link} to="/">
             Logout

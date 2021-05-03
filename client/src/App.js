@@ -72,7 +72,6 @@ function App() {
               <Route exact path="/" component={Login} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/schedule" component={Schedule} />
-              <AdminRoute exact path="/schedule" component={Schedule} />
 
               <AdvisorRoute exact path="/schedule/advisor" component={Schedule} />
 

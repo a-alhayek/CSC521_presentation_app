@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
+
 import { useAuth } from './auth';
 import axios from 'axios';
 
@@ -171,6 +172,18 @@ export const Login = props => {
               className={classes.submit}>
               Sign In
             </Button>
+            <Typography style={{ marginLeft: '43%', variant: 'outlined' }}>No Account?</Typography>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              component={Link}
+              to="/schedule"
+              className={classes.submit}>
+              View Schedule
+            </Button>
+
             <Grid container>
               <Grid item xs>
                 <div />
@@ -180,6 +193,7 @@ export const Login = props => {
               This website is for Capstone Project student of IT and CS majors
             </Typography>
           </form>
+          <Typography style={{ padding: 50, variant: 'outlined' }}></Typography>
         </div>
       </Grid>
     </Grid>

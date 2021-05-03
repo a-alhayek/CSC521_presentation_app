@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FetchData from './FetchData';
 import styled from 'styled-components';
 import ReactTable from 'react-table-6';
 import 'react-table-6/react-table.css';
+import { Link } from 'react-router-dom';
 
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import jsPDF from 'jspdf';
@@ -20,7 +21,7 @@ const Wrapper = styled.div`
 const Schedule = props => {
   const { data, loading } = FetchData();
 
-  return <TableList data={data} loading={loading}></TableList>;
+  return <TableList route={props.match.path} data={data} loading={loading}></TableList>;
 };
 
 const TableList = props => {
@@ -79,9 +80,6 @@ const TableList = props => {
     },
   ];
   const Doc = () => {
-    const head = [
-      ['Project Title', 'Project Decription', 'Team Members', 'Advisor', 'Date', 'Time'],
-    ];
     const columns = [
       { header: 'Project Title', dataKey: 'title' },
       { header: 'Project Decription', dataKey: 'dcrip' },
@@ -106,6 +104,11 @@ const TableList = props => {
       {props.data ? (
         <Wrapper>
           <Title>Presentations Schedule</Title>
+          {props.route === '/schedule' ? (
+            <Button variant="contained" color="primary" component={Link} to="/">
+              Login
+            </Button>
+          ) : null}
           <ReactTable
             className="-highlight"
             data={props.data}
