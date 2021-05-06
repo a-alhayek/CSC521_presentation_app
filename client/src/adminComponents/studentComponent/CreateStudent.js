@@ -26,6 +26,12 @@ const useStyles = makeStyles(theme => ({
   textField: {
     height: '2.5ch',
   },
+  label: {
+    textAlign: 'right',
+    clear: 'both',
+    float: 'left',
+    marginRight: '15px',
+  },
 }));
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -151,98 +157,95 @@ const StudentFields = props => {
   return (
     <div className={classes.root}>
       <Title>Create New Student</Title>
-      <Grid container spacing={3}>
+        <Grid container spacing={3}>
+          <form className={classes.root}>
+            <div style={{ margin: 30 }}>
         {
           // Student id code block
         }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Student id:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+        
+          
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>Student id:</Typography>
+          
+        
+        
+          
             <TextField
               required
               id="standard-required"
-              label="studentid"
+                variant="outlined"
+                color="secondary"
+                placeholder="required"
               className={classes.textField}
               onChange={props.setStudentid}
               value={props.studentid}
             />
-          </Paper>
-        </Grid>
-
+          
+          </div>
         {
           // FirstName code block
         }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">First Name:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+            <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>First Name:</Typography>
+         
+        
+          
             <TextField
               required
               id="standard-required"
-              label="Firstname"
+                variant="outlined"
+                color="secondary"
+                placeholder="required"
               className={classes.textField}
               onChange={props.setFirstName}
               value={props.firstName}
             />
-          </Paper>
-        </Grid>
+          </div>
+        
         {
           // Last Name code block
         }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Last Name:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+        
+        <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>Last Name:</Typography>
+          
+        
+        
             <TextField
               required
               id="standard-required"
-              label="Lastname"
+                variant="outlined"
+                color="secondary"
+                placeholder="required"
               className={classes.textField}
               onChange={props.setLastName}
               value={props.lastName}
             />
-          </Paper>
-        </Grid>
+          </div>
         {
           //Advvisor email
         }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Email:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+            <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>Email:</Typography>
+          
+        
             <TextField
               required
               id="standard-required"
-              label="Email"
+              variant="outlined"
+              color="secondary"
+              placeholder="required"
               className={classes.textField}
               onChange={props.setEmail}
               value={props.email}
             />
-          </Paper>
-        </Grid>
+          </div>
         {
           //advisor major
         }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Major:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+            <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>Major:</Typography>
+         
             <Select
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
@@ -251,20 +254,20 @@ const StudentFields = props => {
               <MenuItem value="CS">CS</MenuItem>
               <MenuItem value="IT">IT</MenuItem>
             </Select>
-          </Paper>
-        </Grid>
+          
+        </div>
         {
           // submit button
         }
-        <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>
+        
             <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" onClick={props.handleSubmit}>
+              <Button  style={{ marginLeft: 20 }}
+              variant="contained"
+              color="primary" onClick={props.handleSubmit}>
                 Submit
               </Button>
             </label>
-          </Paper>
-        </Grid>
+       </form>
       </Grid>
     </div>
   );
