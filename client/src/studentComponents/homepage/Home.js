@@ -47,7 +47,7 @@ const HomePage = () => {
 
   const [team, setTeam] = useState([]);
 
-  const { username } = useAuth();
+  const { username, role } = useAuth();
   const { timeslots, load } = useFetchTimeslots();
   const { advisors, loadingAdvisors } = useFetchAdvisors();
   const { students, loadingStudents } = useFetchStudents();
@@ -269,7 +269,7 @@ const HomePage = () => {
     }
   });
 
-  if (!username) {
+  if (!username && role !== 'student') {
     return <Redirect to="/login" />;
   }
   return (

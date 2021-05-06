@@ -6,6 +6,7 @@ import { Grid, Typography, TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
+import { useAuth } from '../../studentComponents/auth/auth';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { host } from '../../components/host';
@@ -48,6 +49,7 @@ const CreateTimeSlots = () => {
   const [startTime, setStartTime] = useState('');
   const [redirect, setRedirect] = useState(null);
   const [date, setDate] = useState('');
+  const { username, role } = useAuth();
 
   const setDateOnChange = eventDate => {
     if (!moment.isMoment(eventDate)) {
@@ -152,6 +154,9 @@ const CreateTimeSlots = () => {
   };
   if (redirect) {
     return <Redirect to={redirect} />;
+  }
+  if (!username && role !== 'admin') {
+    return <Redirect to="/" />;
   }
   return (
     <DatePickeer

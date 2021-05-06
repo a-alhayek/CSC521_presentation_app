@@ -5,9 +5,12 @@ import React from 'react';
 import useFetchStudents from '../studentAPI/APIStudentsFetch';
 import DeleteStudent from '../studentAPI/APIStudentDelete';
 import Button from '@material-ui/core/Button';
+
 import 'react-table-6/react-table.css';
 import axios from 'axios';
 import { host } from '../../components/host';
+import { useAuth } from '../../studentComponents/auth/auth';
+import { Redirect } from 'react-router-dom';
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
@@ -17,6 +20,7 @@ const Title = styled.h1.attrs({
 
 const StudentsList = () => {
   const { students, loadingStudents } = useFetchStudents();
+  const { username, role } = useAuth();
 
   const handleOnClickDeleteAllBtn = async e => {
     console.log(students);
@@ -40,6 +44,9 @@ const StudentsList = () => {
       }
     }
   };
+  if (!username && role !== 'admin') {
+    return <Redirect to="/" />;
+  }
 
   return (
     <TableList

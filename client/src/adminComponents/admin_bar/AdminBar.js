@@ -8,6 +8,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
+import { green, red } from '@material-ui/core/colors';
 
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -104,42 +105,42 @@ const CustomAppBar = () => {
     },
     {
       text: ' View Students',
-      icon: <AccountCircleIcon />,
+      icon: <AccountCircleIcon color="primary" />,
       path: '/students',
     },
 
     {
       text: 'Create Students',
       path: '/student/create',
-      icon: <AddCircleOutlineIcon />,
+      icon: <AddCircleOutlineIcon style={{ color: green[500] }} />,
     },
     {
       text: 'View Timeslots',
       path: '/timeslots',
-      icon: <AccountCircleIcon />,
+      icon: <AccountCircleIcon color="primary" />,
     },
 
     {
       text: 'Create Timeslots',
 
       path: '/timeslots/create',
-      icon: <AddCircleOutlineIcon />,
+      icon: <AddCircleOutlineIcon style={{ color: green[500] }} />,
     },
     {
       text: 'View Advisors',
       path: '/supervisors',
-      icon: <AccountCircleIcon />,
+      icon: <AccountCircleIcon color="primary" />,
     },
 
     {
       text: 'Create Advisors',
       path: '/supervisor/create',
-      icon: <AddCircleOutlineIcon />,
+      icon: <AddCircleOutlineIcon style={{ color: green[500] }} />,
     },
     {
       text: 'Logout',
       path: '/',
-      icon: <ExitToAppIcon />,
+      icon: <ExitToAppIcon style={{ color: red[500] }} />,
     },
   ];
   const history = useHistory();

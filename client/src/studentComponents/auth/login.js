@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { InputAdornment } from '@material-ui/core';
 import { AccountCircleOutlined } from '@material-ui/icons';
-import SSUlogo from '../images/SSUlogo.png';
+import logo_cs from '../images/logo_cs.png';
 import { host } from '../../components/host';
 
 //import SalemState from "../"
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     height: '100vh',
   },
   salem: {
-    backgroundImage: { SSUlogo },
+    backgroundImage: { logo_cs },
     width: '200px',
   },
   image: {
@@ -118,8 +118,8 @@ export const Login = props => {
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} elevation={6}>
-        <Grid container justify="center" style={{ padding: 10 }}>
-          <img alt="logo" src={SSUlogo} width={300} padding={20} />
+        <Grid container justify="center" style={{ padding: 10, backgroundColor: 'blue' }}>
+          <img alt="logo" src={logo_cs} width={300} padding={20} backgroundColor="blue" />
         </Grid>
 
         <div className={classes.paper}>
@@ -130,6 +130,7 @@ export const Login = props => {
             <TextField
               variant="outlined"
               margin="normal"
+              placeholder="studentID no leading(s)"
               required
               fullWidth
               value={userName}
@@ -150,6 +151,7 @@ export const Login = props => {
               required
               fullWidth
               name="password"
+              placeholder="Lastname_studentID no leading (s)"
               label="Password"
               type="password"
               id="password"

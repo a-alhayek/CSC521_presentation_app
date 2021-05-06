@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import useFetch from '../util/APIStudentFetch';
 import { useAuth } from '../auth/auth';
 import { Redirect } from 'react-router-dom';
@@ -30,11 +30,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ProfilePage = () => {
-  const { username } = useAuth();
+  const { username, role } = useAuth();
 
   const { data } = useFetch();
 
-  if (!username) {
+  if (!username && role !== 'student') {
     return <Redirect to="/login" />;
   }
   return <Table student={data}></Table>;

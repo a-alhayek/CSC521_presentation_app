@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const dbPath = require('../config/keys').mongoURI; // paste in path from Mongo DB.
 
-mongoose.set('debug', true);
 //Connectung to the database
 mongoose
   .connect(dbPath, {

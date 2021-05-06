@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import { AppBar, Toolbar, Tabs, Tab, Button, makeStyles } from '@material-ui/core';
@@ -15,11 +15,15 @@ const useStyles = makeStyles({
 });
 const CustomAppBar = () => {
   const { setUserName, username, setAuthToken, setTheRole, role } = useAuth();
+  const [value, setValue] = useState('0');
 
   const logout = () => {
     setUserName();
     setAuthToken();
     setTheRole();
+  };
+  const onChangeValue = (event, newValue) => {
+    setValue(newValue);
   };
   const classes = useStyles();
 
@@ -27,19 +31,10 @@ const CustomAppBar = () => {
     <AppBar position="static">
       {username && role === 'student' ? (
         <Toolbar>
-          <Tabs>
-            <Tab label="YouPresent" component={Link} to="/" />
-          </Tabs>
-          <Tabs>
-            <Tab label="Profile" style={{ marginRight: 10 }} component={Link} to="/profile" />
-          </Tabs>
-          <Tabs>
-            <Tab
-              label="Schedule"
-              style={{ marginRight: 999 }}
-              component={Link}
-              to="/schedule/student"
-            />
+          <Tabs value={value} onChange={onChangeValue}>
+            <Tab value="0" label="YouPresent" component={Link} to="/" />
+            <Tab value="1" label="Profile" component={Link} to="/profile" />
+            <Tab value="2" label="Schedule" component={Link} to="/schedule/student" />
           </Tabs>
 
           <Button className={classes.root} onClick={() => logout()} component={Link} to="/">

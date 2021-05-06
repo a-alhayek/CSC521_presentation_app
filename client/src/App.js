@@ -18,29 +18,31 @@ import AdvisorStudent from './advisorComponents/AdvisorStudent';
 import AdvisorRoute from './advisorComponents/route_types/AdvisorRoute';
 import Schedule from './Presenations/Presenations';
 import ScopedCssBaseline from '@material-ui/core/ScopedCssBaseline';
+
+let base64 = require('base-64');
 function App() {
   const existingToken = localStorage.getItem('token') || '';
   const existingUsername = localStorage.getItem('username') || '';
-  const existingRole = localStorage.getItem('role') || '';
+  const existingRole = localStorage.getItem('SSS') || '';
   const [authToken, setAuthToken] = useState(existingToken);
-  const [username, setUsername] = useState(existingUsername);
-  const [role, setRole] = useState(existingRole);
+  const [username, setUsername] = useState(base64.decode(existingUsername));
+  const [role, setRole] = useState(base64.decode(existingRole));
 
   const setUserName = data => {
     if (!data) {
       localStorage.removeItem('username');
       setUsername();
     } else {
-      localStorage.setItem('username', data);
+      localStorage.setItem('username', base64.encode(data));
       setUsername(data);
     }
   };
   const setTheRole = data => {
     if (!data) {
-      localStorage.removeItem('role');
+      localStorage.removeItem('SSS');
       setRole();
     } else {
-      localStorage.setItem('role', data);
+      localStorage.setItem('SSS', base64.encode(data));
       setRole(data);
     }
   };

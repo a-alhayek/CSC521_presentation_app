@@ -10,6 +10,8 @@ import updateTimeslot from '../timeslotAPI/APITImeslotUpdate';
 import { host } from '../../components/host';
 import 'react-table-6/react-table.css';
 import axios from 'axios';
+import { useAuth } from '../../studentComponents/auth/auth';
+import { Redirect } from 'react-router-dom';
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
 `;
@@ -19,6 +21,7 @@ const Title = styled.h1.attrs({
 
 const TimeList = () => {
   const { data, loading } = useFetch();
+  const { username, role } = useAuth();
 
   const handleOnClickDeleteAllBtn = async e => {
     e.preventDefault();
@@ -38,7 +41,9 @@ const TimeList = () => {
       }
     }
   };
-
+  if (!username && role !== 'admin') {
+    return <Redirect to="/" />;
+  }
   return (
     <TimeslotsList
       deleteALl={handleOnClickDeleteAllBtn}

@@ -4,6 +4,8 @@ import DeleteButton from '../../components/buttons/DeleteButton';
 import React from 'react';
 import useFetchAdvisors from '../supervisorAPI/APIAdvisorsFetch';
 import DeleteAdvisor from '../supervisorAPI/APIAdvisorDelete';
+import { useAuth } from '../../studentComponents/auth/auth';
+import { Redirect } from 'react-router-dom';
 import 'react-table-6/react-table.css';
 const Wrapper = styled.div`
   padding: 0 40px 40px 40px;
@@ -13,7 +15,10 @@ const Title = styled.h1.attrs({
 })``;
 const AdvisorsList = () => {
   const { advisors, loadingAdvisors } = useFetchAdvisors();
-
+  const { username, role } = useAuth();
+  if (!username && role !== 'admin') {
+    return <Redirect to="/" />;
+  }
   return <TableList advisors={advisors} loading={loadingAdvisors}></TableList>;
 };
 

@@ -26,7 +26,7 @@ authenticateToken = (req, res, next) => {
   }
 
   const token = req.header('x-auth-token');
-  console.log(token);
+
   if (!token) {
     res.status(401).json({ msg: 'Invalid token. Access Denied' });
     return;
@@ -34,6 +34,7 @@ authenticateToken = (req, res, next) => {
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, userid) => {
     if (err) return res.status(401).json({ message: 'error in verify' });
+    console.log(userid);
     req.userid = userid;
     next();
   });

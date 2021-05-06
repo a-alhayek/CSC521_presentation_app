@@ -5,7 +5,6 @@ const useFetchTimeslots = () => {
   const [timeslots, setTimeslots] = useState(null);
   const [load, setLoad] = useState(false);
 
-  const username = localStorage.getItem('username');
   const url = `${host}timeslots`;
   const headers = {
     'Content-Type': 'application/json',

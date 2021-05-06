@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 
 const StudentProfile = props => {
   const [redirect, setRedirect] = useState(false);
-  const { username } = useAuth();
+  const { username, role } = useAuth();
   const classes = useStyles();
   const { presentId } = props.match.params;
   const { title, decrip, confirm, studentsIds, timeslotID } = props.location.state;
@@ -108,7 +108,7 @@ const StudentProfile = props => {
     return <Redirect to="/advisor" />;
   }
 
-  if (!username) {
+  if (!username && role !== 'advisor') {
     return <Redirect to="/login" />;
   }
   return (

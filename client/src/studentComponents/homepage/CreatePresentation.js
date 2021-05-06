@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Typography, TextField } from '@material-ui/core';
@@ -62,7 +63,7 @@ const CreatePresentation = props => {
   const [team, setTeam] = useState([]);
   const [selectedTimeslot, setSlectedTimeslot] = useState(null);
   const [selectedAdvisor, setSelectedAdvisor] = useState(null);
-  const { username } = useAuth();
+  const { username, role } = useAuth();
 
   const titleEdit = str => {
     return str.replace(/(?:^|\s)\w/g, function(match) {
@@ -232,8 +233,11 @@ const CreatePresentation = props => {
       alert(`${err}, bad request to the database`);
     }
   };
-
   const classes = useStyles();
+  if (!username && role !== 'student') {
+    return <Redirect to="/login" />;
+  }
+
   return (
     <div className={classes.root}>
       <Title>Create Presentation</Title>

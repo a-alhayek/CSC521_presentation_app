@@ -54,7 +54,7 @@ const AdvisorHome = props => {
   }
 
   return (
-    <Grid container xs={12} xl={3}>
+    <Grid container xl={3}>
       {!data ? (
         <Title>No student to render!</Title>
       ) : (
@@ -100,9 +100,7 @@ const StudentCard = props => {
         <Typography className={classes.title} color="textSecondary" gutterBottom>
           {props.title}
         </Typography>*/}
-            <Typography variant="underlined" component="h2">
-              {props.title}
-            </Typography>
+            <Typography component="h2">{props.title}</Typography>
 
             <Typography className={classes.pos}>{props.decrip}</Typography>
           </CardContent>

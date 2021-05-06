@@ -7,7 +7,6 @@ const useFetchStudent = studentsIds => {
   const [students, setData] = useState(null);
   const [loadingStudents, setLoading] = useState(false);
 
-  const username = localStorage.getItem('username');
   const url = `${host}students/CS`;
   const headers = {
     'Content-Type': 'application/json',

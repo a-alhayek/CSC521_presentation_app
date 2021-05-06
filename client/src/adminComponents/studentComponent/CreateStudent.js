@@ -26,6 +26,12 @@ const useStyles = makeStyles(theme => ({
   textField: {
     height: '2.5ch',
   },
+  label: {
+    textAlign: 'right',
+    clear: 'both',
+    float: 'left',
+    marginRight: '15px',
+  },
 }));
 const Title = styled.h1.attrs({
   className: 'h1',
@@ -93,7 +99,7 @@ const CreateStudent = () => {
         `Are you sure you want to create the following Student: \nStudentid: ${studentid}\nFirst Name: ${firstName}\nLast Name: ${lastName},\nEmail: ${email}\nMajor: ${major}??`,
       )
     ) {
-      const sID = 's' + studentid;
+      const sID = studentid;
       const fName = firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
       const lName = lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
       console.log(fName);
@@ -152,97 +158,94 @@ const StudentFields = props => {
     <div className={classes.root}>
       <Title>Create New Student</Title>
       <Grid container spacing={3}>
-        {
-          // Student id code block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Student id:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+        <form className={classes.root}>
+          <div style={{ margin: 30 }}>
+            {
+              // Student id code block
+            }
+
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>
+              Student id:
+            </Typography>
+
             <TextField
               required
               id="standard-required"
-              label="studentid"
+              variant="outlined"
+              color="secondary"
+              placeholder="required"
               className={classes.textField}
               onChange={props.setStudentid}
               value={props.studentid}
             />
-          </Paper>
-        </Grid>
+          </div>
+          {
+            // FirstName code block
+          }
+          <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>
+              First Name:
+            </Typography>
 
-        {
-          // FirstName code block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">First Name:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
             <TextField
               required
               id="standard-required"
-              label="Firstname"
+              variant="outlined"
+              color="secondary"
+              placeholder="required"
               className={classes.textField}
               onChange={props.setFirstName}
               value={props.firstName}
             />
-          </Paper>
-        </Grid>
-        {
-          // Last Name code block
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Last Name:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          </div>
+
+          {
+            // Last Name code block
+          }
+
+          <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>
+              Last Name:
+            </Typography>
+
             <TextField
               required
               id="standard-required"
-              label="Lastname"
+              variant="outlined"
+              color="secondary"
+              placeholder="required"
               className={classes.textField}
               onChange={props.setLastName}
               value={props.lastName}
             />
-          </Paper>
-        </Grid>
-        {
-          //Advvisor email
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Email:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          </div>
+          {
+            //Advvisor email
+          }
+          <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>
+              Email:
+            </Typography>
+
             <TextField
               required
               id="standard-required"
-              label="Email"
+              variant="outlined"
+              color="secondary"
+              placeholder="required"
               className={classes.textField}
               onChange={props.setEmail}
               value={props.email}
             />
-          </Paper>
-        </Grid>
-        {
-          //advisor major
-        }
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
-            <Typography color="textPrimary">Major:</Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <Paper className={classes.paper}>
+          </div>
+          {
+            //advisor major
+          }
+          <div style={{ margin: 30 }}>
+            <Typography component="h1" className={classes.label} style={{ marginTop: 13 }}>
+              Major:
+            </Typography>
+
             <Select
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
@@ -251,20 +254,21 @@ const StudentFields = props => {
               <MenuItem value="CS">CS</MenuItem>
               <MenuItem value="IT">IT</MenuItem>
             </Select>
-          </Paper>
-        </Grid>
-        {
-          // submit button
-        }
-        <Grid item xs={12} sm={12}>
-          <Paper className={classes.paper}>
-            <label htmlFor="contained-button-file">
-              <Button variant="contained" color="primary" onClick={props.handleSubmit}>
-                Submit
-              </Button>
-            </label>
-          </Paper>
-        </Grid>
+          </div>
+          {
+            // submit button
+          }
+
+          <label htmlFor="contained-button-file">
+            <Button
+              style={{ marginLeft: 20 }}
+              variant="contained"
+              color="primary"
+              onClick={props.handleSubmit}>
+              Submit
+            </Button>
+          </label>
+        </form>
       </Grid>
     </div>
   );
